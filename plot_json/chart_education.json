@@ -1,0 +1,97 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+        "url": "data/chart_education.csv"
+    },
+    "title": { "text": "Qualification of Visa by Education" },
+
+    "transform": [
+        {
+            "filter": "datum.visa != 'Total'"
+        }
+    ],
+
+    "facet": {
+        "column": {
+            "field": "visa",
+            "type": "nominal",
+            "title": "Visa"
+        }
+    },
+    "columns": 2,
+    "spec": {
+        "transform": [
+            {
+                "calculate": "indexof(['Postgraduate degree', 'Bachelor degree', 'Graduate diploma and graduate certificate', 'Advanced diploma and diploma', 'Certificate III & IV'], datum.degree) >= 0 ? datum.degree : 'Lower education'",
+                "as": "education_group"
+            },
+            {
+                "calculate": "indexof(['Bachelor degree','Advanced diploma and diploma','Postgraduate degree', 'Certificate III & IV','Graduate diploma and graduate certificate',  'Lower education'], datum.education_group)",
+                "as": "education_order"
+            },
+            {
+                "aggregate": [
+                    {
+                        "op": "sum",
+                        "field": "percentage",
+                        "as": "percentage"
+                    }
+                ],
+                "groupby": ["education_group"]
+            }
+        ],
+        "encoding": {
+            "color": {
+                "field": "education_group",
+                "type": "nominal",
+                "title": "Education",
+                "sort": [
+                    "Postgraduate degree",
+                    "Bachelor degree",
+                    "Graduate diploma and graduate certificate",
+                    "Advanced diploma and diploma",
+                    "Certificate III & IV",
+                    "Lower education"
+                ]
+            },
+            "order": {
+                "field": "education_order",
+                "type": "quantitative",
+                "sort": "ascending"
+            }
+        },
+        "layer": [
+            {
+                "mark": {"type": "arc", "innerRadius": 50},
+                "encoding": {
+                    "theta": {
+                        "field": "percentage",
+                        "type": "quantitative",
+                        "title": "Percentage"
+                    }
+                }
+            },
+            {
+                "mark": {
+                    "type": "text",
+                    "radius": 95,
+                    "fill": "white",
+                    "fontSize": 12,
+                    "fontWeight": "bold"
+                },
+                "encoding": {
+                    "text": {
+                        "field": "percentage",
+                        "type": "quantitative",
+                        "format": ".1%"
+                    }
+                }
+            }
+        ]
+    },
+    "resolve": {
+        "scale": {
+            "color": "independent"
+        }
+    }
+}

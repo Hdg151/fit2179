@@ -1,0 +1,92 @@
+{
+	"$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+	"title": {
+		"text": "Total born overseas by LGA",
+		"subtitle": "Australia, 2021"
+	},
+	"width": 720,
+	"height": 820,
+	"projection": {
+		"type": "mercator",
+		"fit": {
+			"data": {
+				"url": "../LGA_2025_AUST_GDA2020.json",
+				"format": {
+					"type": "topojson",
+					"feature": "LGA_2025_AUST_GDA2020"
+				}
+			}
+		}
+	},
+	"data": {
+		"url": "data/lga_heat_map.csv",
+		"format": {
+			"type": "csv"
+		}
+	},
+	"transform": [
+		{
+			"filter": "datum.Year === '2021'"
+		},
+		{
+			"calculate": "toNumber(datum['Total.born.overseas....'])",
+			"as": "total_born_overseas"
+		},
+		{
+			"lookup": "Label",
+			"from": {
+				"data": {
+					"url": "LGA_2025_AUST_GDA2020.json",
+					"format": {
+						"type": "topojson",
+						"feature": "LGA_2025_AUST_GDA2020"
+					}
+				},
+				"key": "properties.LGA_NAME25",
+				"fields": ["geometry", "properties.LGA_NAME25", "properties.STE_NAME21"]
+			}
+		}
+	],
+	"mark": {
+		"type": "geoshape",
+		"stroke": "#ffffff",
+		"strokeWidth": 0.25
+	},
+	"encoding": {
+		"color": {
+			"field": "total_born_overseas",
+			"type": "quantitative",
+			"title": "Born overseas",
+			"scale": {
+				"scheme": "blues"
+			}
+		},
+		"tooltip": [
+			{
+				"field": "Label",
+				"type": "nominal",
+				"title": "LGA"
+			},
+			{
+				"field": "properties.STE_NAME21",
+				"type": "nominal",
+				"title": "State"
+			},
+			{
+				"field": "total_born_overseas",
+				"type": "quantitative",
+				"title": "Born overseas (2021)",
+				"format": ","
+			}
+		]
+	},
+	"config": {
+		"view": {
+			"stroke": null
+		},
+		"legend": {
+			"titleFontSize": 14,
+			"labelFontSize": 12
+		}
+	}
+}

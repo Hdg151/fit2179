@@ -1,0 +1,28 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+        "url": "../data/aus_born_vs_overseas.csv"
+    },
+    "width": 600,
+    "title": { "text": "Proportion in Australian Population" },
+
+    "transform": [
+        {"calculate": "datum.name == \"aus_born\" ? 'Australian born' : 'Overseas born'", "as": "name"}
+    ],
+
+    "encoding": {
+        "x": { "field": "Year", "type": "ordinal", "title":"Year"}        
+    },
+    "layer": [
+        {
+            "mark":"area",
+            "encoding":{
+                "y": {
+                        "field": "value", "type": "quantitative", "title": "People (millions)",
+                        "scale": {"domain": [0, 30]}
+                     },
+                "color": {"field":"name", "type": "nominal", "title":"Origin"}
+            }
+        }
+    ]
+}

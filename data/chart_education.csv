@@ -1,0 +1,111 @@
+"gender","degree","visa","percentage"
+"male","Postgraduate degree","Skilled",0.244612428798885
+"male","Postgraduate degree","Family",0.0957239905350737
+"male","Postgraduate degree","Humanitarian",0.032965453596472
+"male","Postgraduate degree","Other permanent",0.0537974683544304
+"male","Postgraduate degree","Total",0.184881354509787
+"male","Graduate diploma and graduate certificate","Skilled",0.0228158135438192
+"male","Graduate diploma and graduate certificate","Family",0.0136020151133501
+"male","Graduate diploma and graduate certificate","Humanitarian",0.00568839401205758
+"male","Graduate diploma and graduate certificate","Other permanent",0.00632911392405063
+"male","Graduate diploma and graduate certificate","Total",0.0187069557021092
+"male","Bachelor degree","Skilled",0.321663287083864
+"male","Bachelor degree","Family",0.232751698343638
+"male","Bachelor degree","Humanitarian",0.102292755618424
+"male","Bachelor degree","Other permanent",0.177215189873418
+"male","Bachelor degree","Total",0.276421418586201
+"male","Advanced diploma and diploma","Skilled",0.107140437393834
+"male","Advanced diploma and diploma","Family",0.119856499503855
+"male","Advanced diploma and diploma","Humanitarian",0.0794030212028835
+"male","Advanced diploma and diploma","Other permanent",0.117088607594937
+"male","Advanced diploma and diploma","Total",0.107530416092613
+"male","Certificate III & IV","Skilled",0.103122444140094
+"male","Certificate III & IV","Family",0.124072971528891
+"male","Certificate III & IV","Humanitarian",0.120462333300554
+"male","Certificate III & IV","Other permanent",0.199367088607595
+"male","Certificate III & IV","Total",0.110286649866618
+"male","Secondary education - years 10 and above","Skilled",0.14773293713976
+"male","Secondary education - years 10 and above","Family",0.286692618884055
+"male","Secondary education - years 10 and above","Humanitarian",0.340917858682743
+"male","Secondary education - years 10 and above","Other permanent",0.365506329113924
+"male","Secondary education - years 10 and above","Total",0.203045921947376
+"male","Certificate I & II","Skilled",0.000102839333504329
+"male","Certificate I & II","Family",0.000509884741622777
+"male","Certificate I & II","Humanitarian",0.00478067156332499
+"male","Certificate I & II","Other permanent",0
+"male","Certificate I & II","Total",0.000690029769189705
+"male","Secondary education - years 9 and below","Skilled",0.0159231584500056
+"male","Secondary education - years 9 and below","Family",0.0512541027402488
+"male","Secondary education - years 9 and below","Humanitarian",0.145175076967299
+"male","Secondary education - years 9 and below","Other permanent",0.0363924050632911
+"male","Secondary education - years 9 and below","Total",0.0381987425606166
+"male","Level of education inadequately described","Skilled",0.0186296477329371
+"male","Level of education inadequately described","Family",0.0292130371727349
+"male","Level of education inadequately described","Humanitarian",0.0212558340078215
+"male","Level of education inadequately described","Other permanent",0.00632911392405063
+"male","Level of education inadequately described","Total",0.0215960668303156
+"male","Not stated","Skilled",0.0170410824989232
+"male","Not stated","Family",0.0303152431112129
+"male","Not stated","Humanitarian",0.0371031550919447
+"male","Not stated","Other permanent",0.0316455696202532
+"male","Not stated","Total",0.0224881323427365
+"male","No educational attainment","Skilled",0.00121592388437471
+"male","No educational attainment","Family",0.0160079383253187
+"male","No educational attainment","Humanitarian",0.109955445956475
+"male","No educational attainment","Other permanent",0.00632911392405063
+"male","No educational attainment","Total",0.0161543117924378
+"female","Postgraduate degree","Skilled",0.227325771996973
+"female","Postgraduate degree","Family",0.118751799027389
+"female","Postgraduate degree","Humanitarian",0.022487590460114
+"female","Postgraduate degree","Other permanent",0.0671140939597315
+"female","Postgraduate degree","Total",0.166107545084116
+"female","Graduate diploma and graduate certificate","Skilled",0.0352698970760644
+"female","Graduate diploma and graduate certificate","Family",0.0223542303866036
+"female","Graduate diploma and graduate certificate","Humanitarian",0.0123594003309211
+"female","Graduate diploma and graduate certificate","Other permanent",0.0385906040268456
+"female","Graduate diploma and graduate certificate","Total",0.02811981942308
+"female","Bachelor degree","Skilled",0.372370407446032
+"female","Bachelor degree","Family",0.280362111599455
+"female","Bachelor degree","Humanitarian",0.103145421422961
+"female","Bachelor degree","Other permanent",0.187919463087248
+"female","Bachelor degree","Total",0.312604727949507
+"female","Advanced diploma and diploma","Skilled",0.102430159721651
+"female","Advanced diploma and diploma","Family",0.120265086159735
+"female","Advanced diploma and diploma","Humanitarian",0.0934350609195594
+"female","Advanced diploma and diploma","Other permanent",0.140939597315436
+"female","Advanced diploma and diploma","Total",0.108982334597683
+"female","Certificate III & IV","Skilled",0.0523942058235871
+"female","Certificate III & IV","Family",0.0785714165478537
+"female","Certificate III & IV","Humanitarian",0.116616248558488
+"female","Certificate III & IV","Other permanent",0.140939597315436
+"female","Certificate III & IV","Total",0.0683937489222339
+"female","Secondary education - years 10 and above","Skilled",0.153513026373837
+"female","Secondary education - years 10 and above","Family",0.238612893071704
+"female","Secondary education - years 10 and above","Humanitarian",0.288879046679926
+"female","Secondary education - years 10 and above","Other permanent",0.347315436241611
+"female","Secondary education - years 10 and above","Total",0.199454916571457
+"female","Certificate I & II","Skilled",0.000125467636769842
+"female","Certificate I & II","Family",0.00106552920442169
+"female","Certificate I & II","Humanitarian",0.00640950645964601
+"female","Certificate I & II","Other permanent",0
+"female","Certificate I & II","Total",0.00102503715072649
+"female","Secondary education - years 9 and below","Skilled",0.017492616971589
+"female","Secondary education - years 9 and below","Family",0.0554159351323327
+"female","Secondary education - years 9 and below","Humanitarian",0.146482710210085
+"female","Secondary education - years 9 and below","Other permanent",0.0302013422818792
+"female","Secondary education - years 9 and below","Total",0.0435819414835695
+"female","Level of education inadequately described","Skilled",0.0203378991860793
+"female","Level of education inadequately described","Family",0.0295133073319519
+"female","Level of education inadequately described","Humanitarian",0.0255962428760049
+"female","Level of education inadequately described","Other permanent",0.0352348993288591
+"female","Level of education inadequately described","Total",0.0245163878845006
+"female","Not stated","Skilled",0.0172120011818242
+"female","Not stated","Family",0.0335717447914475
+"female","Not stated","Humanitarian",0.0354904484147544
+"female","Not stated","Other permanent",0.011744966442953
+"female","Not stated","Total",0.0253930282359262
+"female","No educational attainment","Skilled",0.00152854658559389
+"female","No educational attainment","Family",0.021515946747106
+"female","No educational attainment","Humanitarian",0.149098323667541
+"female","No educational attainment","Other permanent",0
+"female","No educational attainment","Total",0.0218205126972011

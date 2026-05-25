@@ -1,0 +1,39 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "COVID-19 Active Cases (10 Oct 2020)",
+  "width": 800,
+  "height": 400,
+  "projection": {"type": "mercator"},
+  "data": {
+    "url": "../LGA_2025_AUST_GDA2020.json",
+    "format": {"type": "topojson", "feature": "LGA_2025_AUST_GDA2020"}
+  },
+  "transform": [
+    {
+      "lookup": "properties.LGA_CODE25",
+      "from": {
+        "data": {
+          "url": "../data/lga_heat_map.csv",
+          "format": { "type": "csv" },
+          "transform": [
+            { "filter": "datum.Year === '2021'" }
+          ]
+        },
+        "key": "Code",
+        "fields": ["Total_born_overseas"]
+      }
+    }
+  ],
+  "mark": {"type": "geoshape"},
+  "encoding": {
+    "color": {
+      "field": "Total_born_overseas",
+      "type": "quantitative"
+      ,"scale": { "zero": true }
+    },
+    "tooltip": [
+      {"field": "properties.LGA_NAME25", "type": "nominal", "title": "State"},
+      {"field": "Total_born_overseas", "type": "quantitative"}
+    ]
+  }
+}

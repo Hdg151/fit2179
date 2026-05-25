@@ -1,0 +1,24 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+        "url": "data/age_chart.csv"
+    },
+    "width": 600,
+    "title": { "text": "Age of immigrant arriving to Australia" },
+
+
+
+    "encoding": {
+        "x": { "field": "Age", "type": "ordinal", "title":"Age"}        
+    },
+    "layer": [
+        {
+            "mark":"bar",
+            "encoding":{
+                "y": {
+                        "field": "a2024", "type": "quantitative", "title": "People"
+                     }
+            }
+        }
+    ]
+}

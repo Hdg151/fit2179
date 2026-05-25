@@ -1,0 +1,209 @@
+"country","state","number"
+"New Zealand","New.South.Wales",118527
+"New Zealand","Victoria",99344
+"New Zealand","Queensland",208572
+"New Zealand","South.Australia",13461
+"New Zealand","Western..Australia",75591
+"New Zealand","Tasmania",5483
+"New Zealand","Northern.Territory",4041
+"New Zealand","Capital.Territory",5122
+"Melanesia","New.South.Wales",7445
+"Melanesia","Victoria",3432
+"Melanesia","Queensland",20357
+"Melanesia","South.Australia",1455
+"Melanesia","Western..Australia",2498
+"Melanesia","Tasmania",425
+"Melanesia","Northern.Territory",773
+"Melanesia","Capital.Territory",784
+"Micronesia","New.South.Wales",277
+"Micronesia","Victoria",389
+"Micronesia","Queensland",638
+"Micronesia","South.Australia",76
+"Micronesia","Western..Australia",62
+"Micronesia","Tasmania",39
+"Micronesia","Northern.Territory",33
+"Micronesia","Capital.Territory",27
+"Polynesia (excludes Hawaii)","New.South.Wales",57596
+"Polynesia (excludes Hawaii)","Victoria",24577
+"Polynesia (excludes Hawaii)","Queensland",28793
+"Polynesia (excludes Hawaii)","South.Australia",1781
+"Polynesia (excludes Hawaii)","Western..Australia",3125
+"Polynesia (excludes Hawaii)","Tasmania",565
+"Polynesia (excludes Hawaii)","Northern.Territory",747
+"Polynesia (excludes Hawaii)","Capital.Territory",1707
+"Antarctica","New.South.Wales",12
+"Antarctica","Victoria",7
+"Antarctica","Queensland",4
+"Antarctica","South.Australia",0
+"Antarctica","Western..Australia",8
+"Antarctica","Tasmania",0
+"Antarctica","Northern.Territory",0
+"Antarctica","Capital.Territory",0
+"United Kingdom","New.South.Wales",275351
+"United Kingdom","Victoria",212739
+"United Kingdom","Queensland",227177
+"United Kingdom","South.Australia",112206
+"United Kingdom","Western..Australia",236098
+"United Kingdom","Tasmania",22706
+"United Kingdom","Northern.Territory",5998
+"United Kingdom","Capital.Territory",16011
+"Ireland","New.South.Wales",27001
+"Ireland","Victoria",17456
+"Ireland","Queensland",12611
+"Ireland","South.Australia",3295
+"Ireland","Western..Australia",18147
+"Ireland","Tasmania",745
+"Ireland","Northern.Territory",755
+"Ireland","Capital.Territory",901
+"Western Europe","New.South.Wales",69237
+"Western Europe","Victoria",59940
+"Western Europe","Queensland",49084
+"Western Europe","South.Australia",19566
+"Western Europe","Western..Australia",28816
+"Western Europe","Tasmania",5416
+"Western Europe","Northern.Territory",1828
+"Western Europe","Capital.Territory",4866
+"Northern Europe","New.South.Wales",10167
+"Northern Europe","Victoria",6013
+"Northern Europe","Queensland",8537
+"Northern Europe","South.Australia",1715
+"Northern Europe","Western..Australia",3530
+"Northern Europe","Tasmania",591
+"Northern Europe","Northern.Territory",252
+"Northern Europe","Capital.Territory",917
+"Southern Europe","New.South.Wales",76580
+"Southern Europe","Victoria",88611
+"Southern Europe","Queensland",20585
+"Southern Europe","South.Australia",19386
+"Southern Europe","Western..Australia",23385
+"Southern Europe","Tasmania",1191
+"Southern Europe","Northern.Territory",830
+"Southern Europe","Capital.Territory",2959
+"South Eastern Europe","New.South.Wales",99510
+"South Eastern Europe","Victoria",125901
+"South Eastern Europe","Queensland",22799
+"South Eastern Europe","South.Australia",20357
+"South Eastern Europe","Western..Australia",20738
+"South Eastern Europe","Tasmania",1268
+"South Eastern Europe","Northern.Territory",1583
+"South Eastern Europe","Capital.Territory",4761
+"Eastern Europe","New.South.Wales",43925
+"Eastern Europe","Victoria",37315
+"Eastern Europe","Queensland",19428
+"Eastern Europe","South.Australia",10219
+"Eastern Europe","Western..Australia",12502
+"Eastern Europe","Tasmania",1461
+"Eastern Europe","Northern.Territory",467
+"Eastern Europe","Capital.Territory",2432
+"North Africa","New.South.Wales",29538
+"North Africa","Victoria",25050
+"North Africa","Queensland",7911
+"North Africa","South.Australia",3726
+"North Africa","Western..Australia",6711
+"North Africa","Tasmania",603
+"North Africa","Northern.Territory",475
+"North Africa","Capital.Territory",1326
+"Middle East","New.South.Wales",202435
+"Middle East","Victoria",112739
+"Middle East","Queensland",25009
+"Middle East","South.Australia",13677
+"Middle East","Western..Australia",19390
+"Middle East","Tasmania",1356
+"Middle East","Northern.Territory",551
+"Middle East","Capital.Territory",4213
+"Mainland South-East Asia","New.South.Wales",156679
+"Mainland South-East Asia","Victoria",147924
+"Mainland South-East Asia","Queensland",46679
+"Mainland South-East Asia","South.Australia",27289
+"Mainland South-East Asia","Western..Australia",39175
+"Mainland South-East Asia","Tasmania",2731
+"Mainland South-East Asia","Northern.Territory",2911
+"Mainland South-East Asia","Capital.Territory",7517
+"Maritime South-East Asia","New.South.Wales",201712
+"Maritime South-East Asia","Victoria",175736
+"Maritime South-East Asia","Queensland",85449
+"Maritime South-East Asia","South.Australia",30111
+"Maritime South-East Asia","Western..Australia",101352
+"Maritime South-East Asia","Tasmania",5194
+"Maritime South-East Asia","Northern.Territory",9970
+"Maritime South-East Asia","Capital.Territory",10484
+"Chinese Asia (includes Mongolia)","New.South.Wales",315494
+"Chinese Asia (includes Mongolia)","Victoria",208672
+"Chinese Asia (includes Mongolia)","Queensland",85952
+"Chinese Asia (includes Mongolia)","South.Australia",31851
+"Chinese Asia (includes Mongolia)","Western..Australia",39416
+"Chinese Asia (includes Mongolia)","Tasmania",8422
+"Chinese Asia (includes Mongolia)","Northern.Territory",2566
+"Chinese Asia (includes Mongolia)","Capital.Territory",14955
+"Japan and the Koreas","New.South.Wales",67991
+"Japan and the Koreas","Victoria",24701
+"Japan and the Koreas","Queensland",32900
+"Japan and the Koreas","South.Australia",5477
+"Japan and the Koreas","Western..Australia",11143
+"Japan and the Koreas","Tasmania",1233
+"Japan and the Koreas","Northern.Territory",589
+"Japan and the Koreas","Capital.Territory",3404
+"Southern Asia","New.South.Wales",370038
+"Southern Asia","Victoria",389467
+"Southern Asia","Queensland",106070
+"Southern Asia","South.Australia",67318
+"Southern Asia","Western..Australia",89760
+"Southern Asia","Tasmania",16591
+"Southern Asia","Northern.Territory",10750
+"Southern Asia","Capital.Territory",32919
+"Central Asia","New.South.Wales",17247
+"Central Asia","Victoria",27579
+"Central Asia","Queensland",5688
+"Central Asia","South.Australia",8964
+"Central Asia","Western..Australia",6414
+"Central Asia","Tasmania",327
+"Central Asia","Northern.Territory",53
+"Central Asia","Capital.Territory",881
+"Northern America","New.South.Wales",50230
+"Northern America","Victoria",34507
+"Northern America","Queensland",33306
+"Northern America","South.Australia",7878
+"Northern America","Western..Australia",16743
+"Northern America","Tasmania",3098
+"Northern America","Northern.Territory",1553
+"Northern America","Capital.Territory",4772
+"South America","New.South.Wales",71733
+"South America","Victoria",35029
+"South America","Queensland",31188
+"South America","South.Australia",6390
+"South America","Western..Australia",12710
+"South America","Tasmania",1407
+"South America","Northern.Territory",671
+"South America","Capital.Territory",2929
+"Central America","New.South.Wales",5530
+"Central America","Victoria",5858
+"Central America","Queensland",4157
+"Central America","South.Australia",1357
+"Central America","Western..Australia",1912
+"Central America","Tasmania",279
+"Central America","Northern.Territory",62
+"Central America","Capital.Territory",506
+"Caribbean","New.South.Wales",1629
+"Caribbean","Victoria",1063
+"Caribbean","Queensland",1558
+"Caribbean","South.Australia",253
+"Caribbean","Western..Australia",1020
+"Caribbean","Tasmania",83
+"Caribbean","Northern.Territory",47
+"Caribbean","Capital.Territory",97
+"Central and West Africa","New.South.Wales",11229
+"Central and West Africa","Victoria",8049
+"Central and West Africa","Queensland",7299
+"Central and West Africa","South.Australia",3591
+"Central and West Africa","Western..Australia",5334
+"Central and West Africa","Tasmania",593
+"Central and West Africa","Northern.Territory",655
+"Central and West Africa","Capital.Territory",1227
+"Southern and East Africa","New.South.Wales",75180
+"Southern and East Africa","Victoria",75199
+"Southern and East Africa","Queensland",76207
+"Southern and East Africa","South.Australia",16241
+"Southern and East Africa","Western..Australia",80413
+"Southern and East Africa","Tasmania",3693
+"Southern and East Africa","Northern.Territory",2485
+"Southern and East Africa","Capital.Territory",4678
