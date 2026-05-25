@@ -1,7 +1,7 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "data": {
-        "url": "../data/aus_born_vs_overseas.csv"
+        "url": "data/aus_born_vs_overseas.csv"
     },
     "width": 600,
     "title": { "text": "Proportion in Australian Population" },

@@ -5,7 +5,7 @@
   "height": 400,
   "projection": {"type": "mercator"},
   "data": {
-    "url": "../LGA_2025_AUST_GDA2020.json",
+    "url": "LGA_2025_AUST_GDA2020.json",
     "format": {"type": "topojson", "feature": "LGA_2025_AUST_GDA2020"}
   },
   "transform": [
@@ -13,7 +13,7 @@
       "lookup": "properties.LGA_CODE25",
       "from": {
         "data": {
-          "url": "../data/lga_heat_map.csv",
+          "url": "data/lga_heat_map.csv",
           "format": { "type": "csv" },
           "transform": [
             { "filter": "datum.Year === '2021'" }
