@@ -39,3 +39,8 @@ const vg_8 = "plot_json/lga_heat_map.json";
 vegaEmbed("#lga_heat_map", vg_8, embedOptions).then(function(result) {
     // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
 }).catch(console.error);
+
+const vg_9 = "plot_json/state_pie_chart.json";
+vegaEmbed("#state_pie_chart", vg_9, embedOptions).then(function(result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+}).catch(console.error);

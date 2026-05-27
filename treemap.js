@@ -1,4 +1,4 @@
-const width = 600;
+const width = 300;
 const height = 320;
 
 const color = d3.scaleOrdinal()

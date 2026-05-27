@@ -1,97 +1,81 @@
 {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "data": {
-        "url": "data/chart_education.csv"
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "description": "Four donut charts, one per visa type.",
+  "data": {
+    "url": "data/chart_education.csv"
+  },
+  "transform": [
+    {
+      "calculate": "indexof(['Postgraduate degree', 'Bachelor degree', 'Graduate diploma and graduate certificate', 'Advanced diploma and diploma', 'Certificate III & IV'], datum.degree) >= 0 ? datum.degree : 'Lower education'",
+      "as": "education_group"
     },
-    "title": { "text": "Qualification of Visa by Education" },
-
-    "transform": [
-        {
-            "filter": "datum.visa != 'Total'"
-        }
-    ],
-
-    "facet": {
-        "column": {
-            "field": "visa",
-            "type": "nominal",
-            "title": "Visa"
-        }
+    {
+      "aggregate": [
+        {"op": "sum", "field": "value", "as": "value"}
+      ],
+      "groupby": ["visa", "education_group"]
     },
-    "columns": 2,
-    "spec": {
-        "transform": [
-            {
-                "calculate": "indexof(['Postgraduate degree', 'Bachelor degree', 'Graduate diploma and graduate certificate', 'Advanced diploma and diploma', 'Certificate III & IV'], datum.degree) >= 0 ? datum.degree : 'Lower education'",
-                "as": "education_group"
-            },
-            {
-                "calculate": "indexof(['Bachelor degree','Advanced diploma and diploma','Postgraduate degree', 'Certificate III & IV','Graduate diploma and graduate certificate',  'Lower education'], datum.education_group)",
-                "as": "education_order"
-            },
-            {
-                "aggregate": [
-                    {
-                        "op": "sum",
-                        "field": "percentage",
-                        "as": "percentage"
-                    }
-                ],
-                "groupby": ["education_group"]
-            }
-        ],
-        "encoding": {
-            "color": {
-                "field": "education_group",
-                "type": "nominal",
-                "title": "Education",
-                "sort": [
-                    "Postgraduate degree",
-                    "Bachelor degree",
-                    "Graduate diploma and graduate certificate",
-                    "Advanced diploma and diploma",
-                    "Certificate III & IV",
-                    "Lower education"
-                ]
-            },
-            "order": {
-                "field": "education_order",
-                "type": "quantitative",
-                "sort": "ascending"
-            }
-        },
-        "layer": [
-            {
-                "mark": {"type": "arc", "innerRadius": 50},
-                "encoding": {
-                    "theta": {
-                        "field": "percentage",
-                        "type": "quantitative",
-                        "title": "Percentage"
-                    }
-                }
-            },
-            {
-                "mark": {
-                    "type": "text",
-                    "radius": 95,
-                    "fill": "white",
-                    "fontSize": 12,
-                    "fontWeight": "bold"
-                },
-                "encoding": {
-                    "text": {
-                        "field": "percentage",
-                        "type": "quantitative",
-                        "format": ".1%"
-                    }
-                }
-            }
-        ]
+    {
+      "joinaggregate": [{"op": "sum", "field": "value", "as": "total"}],
+      "groupby": ["visa"]
     },
-    "resolve": {
-        "scale": {
-            "color": "independent"
-        }
+    {
+      "calculate": "datum.value / datum.total",
+      "as": "percent"
+    },
+    {
+      "calculate": "indexof(['Bachelor degree','Advanced diploma and diploma','Postgraduate degree','Certificate III & IV','Graduate diploma and graduate certificate','Lower education'], datum.education_group)",
+      "as": "education_order"
     }
+  ],
+
+  "facet": {
+    "field": "visa",
+    "type": "nominal",
+    "columns": 4,
+    "title": "Education Breakdown by Visa Type"
+  },
+
+  "spec": {
+    "layer": [
+      {
+        "mark": {"type": "arc", "innerRadius": 50},
+        "encoding": {
+          "theta": {"field": "value", "type": "quantitative", "stack":"normalize"},
+          "color": {
+            "field": "education_group", "type": "nominal",
+            "legend": {
+              "orient": "top",
+              "anchor": "middle"
+            }
+          },
+          "order": {
+            "field": "education_order",
+            "type": "quantitative",
+            "sort": "ascending"
+          },
+          "tooltip": [
+            {"field": "education_group", "type": "nominal"},
+            {"field": "percent", "type": "quantitative", "format": ".1%"}
+          ]
+        }
+      },
+      {
+        "transform": [
+          {"filter": "datum.education_group === 'Lower education'"},
+          {"calculate": "1 - datum.percent", "as": "remaining_percent"}
+        ],
+        "mark": {
+          "type": "text",
+          "align": "center",
+          "baseline": "middle",
+          "fontSize": 20,
+          "fontWeight": "bold"
+        },
+        "encoding": {
+          "text": {"field": "remaining_percent", "type": "quantitative", "format": ".1%"}
+        }
+      }
+    ]
+  }
 }

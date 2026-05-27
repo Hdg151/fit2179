@@ -1,35 +1,65 @@
 {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "COVID-19 Active Cases (10 Oct 2020)",
-  "width": 800,
-  "height": 400,
-  "projection": {"type": "mercator"},
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "description": "A simple donut chart with embedded data.",
   "data": {
-    "url": "../LGA_2025_AUST_GDA2020.json",
-    "format": {"type": "topojson", "feature": "LGA_2025_AUST_GDA2020"}
+    "url": "data/chart_education.csv"
   },
   "transform": [
+    {"filter": "datum.visa == 'Skilled'"},
     {
-      "lookup": "properties.LGA_NAME25",
-      "from": {
-        "data": {
-          "url": "../data/lga_heat_map.csv"
+      "calculate": "indexof(['Postgraduate degree', 'Bachelor degree', 'Graduate diploma and graduate certificate', 'Advanced diploma and diploma', 'Certificate III & IV'], datum.degree) >= 0 ? datum.degree : 'Lower education'",
+      "as": "education_group"
+    },
+    {
+      "aggregate": [
+        {"op": "sum", "field": "value", "as": "value"}
+      ],
+      "groupby": ["education_group"]
+    },
+    {
+      "joinaggregate": [{"op": "sum", "field": "value", "as": "total"}]
+    },
+    {
+      "calculate": "datum.value / datum.total",
+      "as": "percent"
+    },
+    {
+      "calculate": "indexof(['Bachelor degree','Advanced diploma and diploma','Postgraduate degree','Certificate III & IV','Graduate diploma and graduate certificate','Lower education'], datum.education_group)",
+      "as": "education_order"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {"type": "arc", "innerRadius": 50},
+      "encoding": {
+        "theta": {"field": "value", "type": "quantitative"},
+        "color": {"field": "education_group", "type": "nominal"},
+        "order": {
+          "field": "education_order",
+          "type": "quantitative",
+          "sort": "ascending"
         },
-        "key": "Label",
-        "fields": ["Total_born_overseas"]
+        "tooltip": [
+          {"field": "education_group", "type": "nominal"},
+          {"field": "percent", "type": "quantitative", "format": ".1%"}
+        ]
       }
     },
-    {"calculate": "datum_Total_born_overseas + 0.1", "as": "Active Cases"}
-  ],
-  "mark": {"type": "geoshape"},
-  "encoding": {
-    "color": {
-      "field": "Active Cases",
-      "type": "quantitative"
-    },
-    "tooltip": [
-      {"field": "properties.LGA_NAME25", "type": "nominal", "title": "Country"},
-      {"field": "Total_born_overseas", "type": "quantitative"}
-    ]
-  }
+    {
+      "transform": [
+        {"filter": "datum.education_group === 'Lower education'"},
+        {"calculate": "1 - datum.percent", "as": "remaining_percent"}
+      ],
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "middle",
+        "fontSize": 14,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "text": {"field": "remaining_percent", "type": "quantitative", "format": ".1%"}
+      }
+    }
+  ]
 }

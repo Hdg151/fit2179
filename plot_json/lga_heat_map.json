@@ -20,7 +20,7 @@
           ]
         },
         "key": "Code",
-        "fields": ["Total_born_overseas"]
+        "fields": ["Total_born_overseas","Label"]
       }
     }
   ],
@@ -32,7 +32,7 @@
       ,"scale": { "zero": true }
     },
     "tooltip": [
-      {"field": "properties.LGA_NAME25", "type": "nominal", "title": "State"},
+      {"field": "Label", "type": "nominal", "title": "State"},
       {"field": "Total_born_overseas", "type": "quantitative"}
     ]
   }

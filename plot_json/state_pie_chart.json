@@ -1,0 +1,14 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "description": "Pie Chart with percentage_tooltip",
+  
+  "data": {
+        "url": "data/state_pie_chart.csv"
+    },
+  "title":{"text":"States' share of total Australian immigrants"},
+  "mark": {"type": "arc", "tooltip": true},
+  "encoding": {
+    "theta": {"field": "number", "type": "quantitative", "stack": "normalize"},
+    "color": {"field": "state", "type": "nominal"}
+  }
+}
