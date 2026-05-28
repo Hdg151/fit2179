@@ -1,3 +1,8 @@
+/* Additional styles for blend class */
+.blend {
+  opacity: 0;
+}
+/* Other styles continue here */
 :root {
   --page: #f6f1e8;
   --surface: #fffdf8;

@@ -70,7 +70,7 @@
     "order": {"field": "number", "type": "quantitative", "sort": "descending"},
     "tooltip": [
       {"field": "state_group", "type": "nominal", "title": "State"},
-      {"field": "number", "type": "quantitative", "title": "Number"},
+      {"field": "number", "type": "quantitative", "title": "Number of overseas born"},
       {"field": "percent", "type": "quantitative", "title": "Percentage", "format": ".1%"}
     ]
   }
