@@ -1,33 +1,93 @@
 {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "data": {
-        "url": "data/line_stacked_bars.csv"
-    },
-    "width": 600,
-    "title": { "text": "Australian immigrants - Arrival and Departure" },
-
-    "transform": [
-        {"calculate": "datum.name == \"Departure\" ? -datum.value : datum.value", "as": "value"}
-    ],
-
-    "encoding": {
-        "x": { "field": "Year", "type": "ordinal", "title":"Year"}        
-    },
-    "layer": [
-        {
-            "mark":"bar",
-            "encoding":{
-                "y": {
-                        "field": "value", "type": "quantitative", "title": "People"
-                     },
-                "color": {"field":"name", "type": "nominal", "title":"Origin"}
-            }
-        },
-        {
-            "mark": {"type":"line", "color": "#000000"},
-            "encoding":{
-                "y": {"field":"Net", "aggregate":"min"}
-            }
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "transparent",
+  "data": {
+    "url": "data/line_stacked_bars.csv"
+  },
+  "width": 600,
+  "title": { "text": "Australian immigrants - Arrival and Departure" },
+    "config": {
+      "range": {
+          "category": [
+              "#2F4B7C",
+              "#665191",
+              "#A05195",
+              "#D45087",
+              "#F95D6A",
+              "#FF7C43",
+              "#FFA600"
+          ]
+      }
+  },
+  "transform": [
+    {
+      "calculate": "datum.name == 'Departure' ? -datum.value : datum.value",
+      "as": "value"
+    }
+  ],
+  "encoding": {
+    "x": { "field": "Year", "type": "ordinal", "title": "Year" }
+  },
+  "layer": [
+    {
+      "mark": "bar",
+      "encoding": {
+        "y": { "field": "value", "type": "quantitative", "title": "People" },
+        "color": {
+          "field": "name",
+          "type": "nominal",
+          "title": "Category",
+          "scale": {"range": ["#2F4B7C", "#639fab", "#FFA600"]}
         }
-    ]
+        ,"tooltip": [
+          {"field":"Year","type":"ordinal"},
+          {"field":"name","type":"nominal"},
+          {"field":"value","type":"quantitative","title":"People"}
+        ]
+      }
+    },
+    {
+      "mark": { "type": "line" , "color": "#FFA600", "strokeWidth": 3},
+      "transform": [
+        { "calculate": "'Net immigrant change'", "as": "legendLabel" }
+      ],
+      "encoding": {
+        "y": { "field": "Net", "aggregate": "min" },
+        "color": {
+          "field": "legendLabel",
+          "type": "nominal"
+        }
+        ,"tooltip": [
+          {"field":"Year","type":"ordinal"},
+          {"field":"Net","type":"quantitative","title":"Net"}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "color": "black",
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "x": { "datum": "2020" }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 8,
+        "dy": 20,
+        "fontSize": 16,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "x": { "datum": "2020" },
+        "y": { "datum": 20 },
+        "text": { "value": "covid-lockdown" }
+      }
+    }
+  ]
 }

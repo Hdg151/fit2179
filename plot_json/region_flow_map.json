@@ -1,5 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "transparent",
   "title": "Region of immigrant arrival to Australia",
   "width": 800,
   "height": 400,

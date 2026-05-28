@@ -1,23 +1,63 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "background": "transparent",
     "data": {
         "url": "data/age_chart.csv"
     },
     "width": 600,
+    "height": 325,
     "title": { "text": "Age of immigrant arriving to Australia" },
 
-
+    "transform": [
+        { "calculate": "toNumber(datum.Age)", "as": "Age" }
+    ],
 
     "encoding": {
-        "x": { "field": "Age", "type": "ordinal", "title":"Age"}        
+        "x": { "field": "Age", "type": "quantitative", "title":"Age",
+               "scale": {"domain": [0, 96]}    
+            }    
     },
     "layer": [
         {
-            "mark":"bar",
+            "mark":{"type":"line","strokeWidth":3},
             "encoding":{
                 "y": {
                         "field": "a2024", "type": "quantitative", "title": "People"
                      }
+                ,"tooltip": [
+                    {"field":"Age","type":"quantitative"},
+                    {"field":"a2024","type":"quantitative","title":"People"}
+                  ]
+            }
+        },
+        {
+            "mark": {
+                "type": "text",
+                "align": "center",
+                "baseline": "middle",
+                "dx": -20,
+                "dy": -10,
+                "fontSize": 12
+            },
+            "encoding": {
+                "x": { "datum": "18" },
+                "y": { "datum": 25000 },
+                "text": { "value": "highschool graduate" }
+            }
+        },
+        {
+            "mark": {
+                "type": "text",
+                "align": "center",
+                "baseline": "middle",
+                "dx": 20,
+                "dy": -10,
+                "fontSize": 12
+            },
+            "encoding": {
+                "x": { "datum": "25" },
+                "y": { "datum": 34000 },
+                "text": { "value": "tertiary graduate" }
             }
         }
     ]

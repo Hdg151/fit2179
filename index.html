@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css" />
 
-    <link rel="stylesheet" href="main.css"> 
+    <link rel="stylesheet" href="main.css">
 
     <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0" defer></script>
@@ -21,46 +21,51 @@
     <script src="treemap.js" defer></script>
     <script src="flowmap.js" defer></script>
 
-    <title>First vega-lite graph </title>
+    <title>Australian Immigration Data Story</title>
 </head>
 
 <body>
-    <h1>Australian Immigration</h1> 
-    <!-- <div id="region_flow_map"></div> -->
+    <h1>Australian Immigration</h1>
 
-    <p>
-        Australia is a majority migrant nation and one of the most successful and cohesive multicultural societies in the world.
-        Migration is fundamental to the Australian story. 
-        Successive waves of migration have shaped and influenced the development of a rich multicultural society.
+    <p class="lede">
+        Australia is a migrant nation shaped by successive waves of arrival, settlement and cultural exchange.
+        This data story follows how immigration has changed over time, where people come from, and how new communities
+        are distributed across the country.
     </p>
 
     <h2>Past trend - The historic path to a multicultural Australia</h2>
 
     <div id="line_stacked_bars"></div>
     <p>
-        According to the earliest population records that contain country of birth, in 1891, 32% of the population was born overseas. This reflects high levels of immigration in the late 19th century. The proportion fell to a low of 10% in 1947 due to decreased migration during World War I, the Great Depression, and World War II. The proportion then rose rapidly as a result of high levels of post-war migration. From 1971 to 2020, there was a more steady increase in the proportion of Australia’s population born overseas. 
+        The earliest population records that include country of birth show that 32% of Australia's population was born overseas in 1891,
+        reflecting high migration in the late 19th century. This share fell to 10% by 1947 after World War I, the Great Depression
+        and World War II slowed migration. It then rose rapidly during the post-war migration period before increasing more steadily
+        from the 1970s onward.
     </p>
 
     <div id="aus_born_vs_overseas"></div>
     <p>
-        Generally, more people migrate to Australia than migrate away. This net flow of migrants contributes to the growth of Australia’s population.
-        In 2021, the proportion of Australia's population born overseas declined. This is attributed to the COVID-19 pandemic travel restrictions and the resulting impact on overseas migration both to and from Australia. These travel restrictions were removed in 2022, and there was a subsequent increase in overseas migration into and out of Australia, most notably by people born overseas migrating to Australia. 
+        Australia usually receives more migrants than it loses, so net overseas migration is an important contributor to population growth.
+        The overseas-born share declined in 2021 as COVID-19 travel restrictions disrupted movement into and out of the country.
+        After restrictions were removed in 2022, overseas migration increased again, led especially by overseas-born people arriving in Australia.
     </p>
 
-    <h2>Modernday statistics - Australian immigration seen from a global perspective</h2>
+    <h2>Modern-day statistics - Australian immigration seen from a global perspective</h2>
 
     <div class="pure-g">
         <div class="pure-u-1-2">
-            <div id="immi_global_top"></div>    
-            <p>
-                Australia is among the top 10 countries of raw number of immigration in the world, being comparable with other European countries such as France and Italy.
-                After population normalisation, Australia with its small population moves up the ranks a bit, being comparable with Canada and Spain.
+            <div id="immi_global_top"></div>
+            <p class="chart-note">
+                By total immigrant population, Australia sits among the world's leading destination countries, at a similar scale to countries
+                such as France and Italy. When adjusted for population size, Australia ranks even higher, closer to countries such as Canada
+                and Spain.
             </p>
         </div>
         <div class="pure-u-1-2">
             <div id="arrival_countries"></div>
-            <p>
-                India, the UK and China accounted for more than one-third of the total immigrants in Australia, followed by Philippines and New Zealand. 
+            <p class="chart-note">
+                India, the United Kingdom and China account for more than one-third of Australia's overseas-born population, followed by
+                the Philippines and New Zealand.
             </p>
         </div>
     </div>
@@ -70,46 +75,77 @@
     <div class="pure-g">
         <div class="pure-u-1-2">
             <div id="age_chart"></div>
-            <p>
-                Australia foreign population is dominated by young people from 18 to 30 years of age. 
-                Interestingly, that highest peak of 22-30 followed by 18-19 shows the two most common reasons for moving to Australia: after-graduate work and higher education. 
+            <p class="chart-note">
+                Australia's overseas-born population is strongly represented by young adults, especially people aged 18 to 30.
+                Peaks around student and early-career ages suggest two major pathways into Australia: higher education and post-graduation work.
             </p>
         </div>
         <div class="pure-u-1-2">
             <div id="time_to_permanent"></div>
-            <p>
-                Overall, it takes about 2-5 years for most to be granted permanent immigrant status. 
-                Interestingly, compared to other visas, more permanent Humanitarian are within the span of 3-5 years, suggesting that it is more common for Humantirian visa type to permanently settle ealier compared to other visa types. 
+            <p class="chart-note">
+                Most permanent migrants receive permanent status within about two to five years. Humanitarian entrants are more concentrated
+                in the three-to-five-year range, suggesting a slightly different settlement pathway compared with other visa groups.
             </p>
         </div>
     </div>
 
     <div id="chart_education"></div>
     <p>
-        Among permanent immigrants, people with Skilled visa have the highest proportion of having qualification, whereas Humanitarian ones the lowest.
-        There is a strong balance between gender, and Bachelor Degree and Certificate III and IV (TAFE vocational training) are the most common qualifications.
+        Among permanent migrants, skilled visa holders have the highest share of formal qualifications, while humanitarian entrants have the lowest.
+        Qualification levels are balanced across gender, with bachelor degrees and Certificate III/IV credentials among the most common outcomes.
     </p>
 
     <h2>State-level statistics - How different parts of Australia affect immigration</h2>
 
-    <div id="state_pie_chart"></div>
-    <p>
-        Most of foreign population decided the five major states to be their new place of settlement. 
-    </p>
+    <div class="pure-g state-summary">
+        <div class="pure-u-1-2">
+            <div id="state_tree_map"></div>
+        </div>
+        <div class="pure-u-1-2">
+            <p class="state-note">
+                Most overseas-born residents settle in Australia's five largest states, reflecting the pull of major labour markets,
+                education hubs and established migrant communities. The state distribution shows that immigration is not spread evenly:
+                it is closely connected to where jobs, universities, housing networks and long-standing migrant communities are concentrated.
+            </p>
+        </div>
+    </div>
 
-    <div id="sankey"></div>
-    <p>
-        Immigrants from Asia, Middle East, Eastern Europe and Africa mostly prefer either New South Wales or Victoria, the two states that house two biggest cities of Australia. 
-        Immigrants from New Zealand, the UK and other Western European countries are more likely to immigrate to Queensland, Southern Australia and Western Australia.
-    </p>
+    <div class="pure-g flow-summary">
+        <div class="pure-u-1-2">
+            <p class="flow-note">
+                Migrants from Asia, the Middle East, Eastern Europe and Africa are more likely to settle in New South Wales or Victoria,
+                the states containing Australia's two largest cities. Migrants from New Zealand, the United Kingdom and Western Europe
+                are more evenly spread across Queensland, South Australia and Western Australia.
+            </p>
+        </div>
+        <div class="pure-u-1-2">
+            <div id="sankey"></div>
+        </div>
+    </div>
 
-    <div id="lga_heat_map"></div>
-    <p>
-        Here you can interact with the map to see how different countries of origin and cultures form unqiue "Ethnic Enclaves".
-    These areas mostly centre around major cities in Australia and help turn them into becoming multicultural. 
-    </p>
-
-
+    <div class="pure-g">
+        <div class="pure-u-1-2">
+            <div id="lga_heat_map"></div>
+        </div>
+        <div class="pure-u-1-2">
+            <div class="map-copy">
+                <h3>Local settlement patterns</h3>
+                <p>
+                    Use the map to explore how communities from different countries of origin form distinctive local settlement patterns
+                    across Australian local government areas.
+                </p>
+                <p>
+                    Many of these clusters are concentrated around major cities, showing how immigration shapes Australia's urban cultures
+                    at the neighbourhood level.
+                </p>
+            </div>
+        </div>
+    </div>
+    <footer class="site-footer">
+        <p class="muted">About</p>
+        <p class="muted">Author: Hung Dang · Student ID: 36463825</p>
+        <p class="muted">Data sources: ABS 2024 and ABS LGA-level 2021 census</p>
+    </footer>
 </body>
 
 </html>

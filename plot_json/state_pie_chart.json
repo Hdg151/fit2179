@@ -1,14 +1,77 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "background": "transparent",
   "description": "Pie Chart with percentage_tooltip",
   
   "data": {
         "url": "data/state_pie_chart.csv"
-    },
+  },
+  "transform": [
+        { "calculate": "toNumber(datum.number)", "as": "number" },
+        {
+          "calculate": "indexof(['Tasmania', 'Capital Territory', 'Northern Territory'], datum.state) >= 0 ? 'Tas + ACT + NT' : datum.state",
+          "as": "state_group"
+        },
+        {
+          "aggregate": [
+            {"op": "sum", "field": "number", "as": "number"}
+          ],
+          "groupby": ["state_group"]
+        },
+        {
+          "joinaggregate": [
+            {"op": "sum", "field": "number", "as": "total"}
+          ],
+          "groupby": []
+        },
+        {
+          "calculate": "datum.number / datum.total",
+          "as": "percent"
+        }
+    ],
+  "config": {
+    "range": {
+        "category": [
+            "#A05195",
+            "#D45087",
+            "#F95D6A",
+            "#FF7C43",
+            "#FFA600"
+        ]
+    }
+  },
   "title":{"text":"States' share of total Australian immigrants"},
-  "mark": {"type": "arc", "tooltip": true},
+  "mark": {"type": "arc"},
   "encoding": {
     "theta": {"field": "number", "type": "quantitative", "stack": "normalize"},
-    "color": {"field": "state", "type": "nominal"}
+    "color": {
+      "field": "state_group",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "New South Wales",
+          "Victoria",
+          "Queensland",
+          "Western Australia",
+          "South Australia",
+          "Tas + ACT + NT"
+        ],
+        "range": [
+          "#2F4B7C",
+          "#639FAB",
+          "#dc2f02",
+          "#f48c06",
+          "#ffba08",
+          "#bbbbbb"
+        ]
+      },
+      "legend": {"title": "State"}
+    },
+    "order": {"field": "number", "type": "quantitative", "sort": "descending"},
+    "tooltip": [
+      {"field": "state_group", "type": "nominal", "title": "State"},
+      {"field": "number", "type": "quantitative", "title": "Number"},
+      {"field": "percent", "type": "quantitative", "title": "Percentage", "format": ".1%"}
+    ]
   }
 }

@@ -1,0 +1,110 @@
+{
+	"$schema": "https://vega.github.io/schema/vega/v6.json",
+	"background": "transparent",
+	"description": "Treemap of Australian immigrant states grouped into Top 5 States and Other States.",
+	"title": {
+		"text": "States' share of total Australian immigrants",
+		"anchor": "start"
+	},
+	"width": 320,
+	"height": 220,
+	"padding": 4,
+	"data": [
+		{
+			"name": "tree",
+			"values": [
+				{ "id": "root", "parent": null, "label": "States" },
+				{ "id": "top", "parent": "root", "label": "Top 5 States", "value": 6761181, "group": "top" },
+				{ "id": "other", "parent": "root", "label": "Other States", "value": 266540, "group": "other" }
+			],
+			"transform": [
+				{ "type": "stratify", "key": "id", "parentKey": "parent" },
+				{
+					"type": "treemap",
+					"field": "value",
+					"method": "dice",
+					"ratio": 1,
+					"paddingInner": 4,
+					"paddingOuter": 4,
+					"round": true,
+					"size": [{ "signal": "width" }, { "signal": "height" }]
+				}
+			]
+		}
+	],
+	"scales": [
+		{
+			"name": "fill",
+			"type": "ordinal",
+			"domain": ["top", "other"],
+			"range": ["#2F4B7C", "#BDBDBD"]
+		}
+	],
+	"marks": [
+		{
+			"type": "rect",
+			"from": {
+				"data": "tree",
+				"transform": [
+					{ "type": "filter", "expr": "datum.depth > 0" }
+				]
+			},
+			"encode": {
+				"enter": {
+					"x": { "field": "x0" },
+					"y": { "field": "y0" },
+					"x2": { "field": "x1" },
+					"y2": { "field": "y1" },
+					"fill": { "scale": "fill", "field": "data.group" },
+					"stroke": { "value": "#ffffff" },
+					"strokeWidth": { "value": 2 }
+				}
+			}
+		},
+		{
+			"type": "text",
+			"from": {
+				"data": "tree",
+				"transform": [
+					{ "type": "filter", "expr": "datum.depth > 0" }
+				]
+			},
+			"encode": {
+				"enter": {
+					"x": { "signal": "(datum.x0 + datum.x1) / 2" },
+					"y": { "signal": "(datum.y0 + datum.y1) / 2 - 8" },
+					"align": { "value": "center" },
+					"baseline": { "value": "middle" },
+					"fill": { "value": "#ffffff" },
+					"fontWeight": { "value": "700" },
+					"fontSize": { "value": 14 }
+				},
+				"update": {
+					"text": { "field": "data.label" }
+				}
+			}
+		},
+		{
+			"type": "text",
+			"from": {
+				"data": "tree",
+				"transform": [
+					{ "type": "filter", "expr": "datum.depth > 0" }
+				]
+			},
+			"encode": {
+				"enter": {
+					"x": { "signal": "(datum.x0 + datum.x1) / 2" },
+					"y": { "signal": "(datum.y0 + datum.y1) / 2 + 12" },
+					"align": { "value": "center" },
+					"baseline": { "value": "middle" },
+					"fill": { "value": "#ffffff" },
+					"fontSize": { "value": 12 }
+				},
+				"update": {
+					"text": { "signal": "format(datum.value, ',')" }
+				}
+			}
+		}
+	]
+}

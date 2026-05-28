@@ -1,0 +1,98 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v6.json",
+  "background": "transparent",
+  "description": "Treemap of immigrant countries (top 20 + other)",
+  "title": { "text": "Immigrant countries, 2024", "anchor": "start" },
+  "width": 500,
+  "height": 300,
+  "padding": 4,
+  "data": [
+    {
+      "name": "tree",
+      "values": [
+        { "id": "root", "parent": null, "label": "Countries" },
+        { "id": "top", "parent": "root", "label": "Top 20 Countries", "group": "Top 20" },
+        { "id": "other", "parent": "root", "label": "Other", "value": 2660980, "group": "Other" },
+        { "id": "England", "parent": "top", "label": "England", "value": 965140 },
+        { "id": "India", "parent": "top", "label": "India", "value": 916020 },
+        { "id": "China", "parent": "top", "label": "China", "value": 699640 },
+        { "id": "New Zealand", "parent": "top", "label": "New Zealand", "value": 617590 },
+        { "id": "Philippines", "parent": "top", "label": "Philippines", "value": 393870 },
+        { "id": "Vietnam", "parent": "top", "label": "Vietnam", "value": 318800 },
+        { "id": "South Africa", "parent": "top", "label": "South Africa", "value": 224280 },
+        { "id": "Nepal", "parent": "top", "label": "Nepal", "value": 197340 },
+        { "id": "Malaysia", "parent": "top", "label": "Malaysia", "value": 183360 },
+        { "id": "Sri Lanka", "parent": "top", "label": "Sri Lanka", "value": 172910 },
+        { "id": "Italy", "parent": "top", "label": "Italy", "value": 155880 },
+        { "id": "Pakistan", "parent": "top", "label": "Pakistan", "value": 134750 },
+        { "id": "Scotland", "parent": "top", "label": "Scotland", "value": 125170 },
+        { "id": "Hong Kong", "parent": "top", "label": "Hong Kong", "value": 124780 },
+        { "id": "Indonesia", "parent": "top", "label": "Indonesia", "value": 120080 },
+        { "id": "Korea, South", "parent": "top", "label": "Korea, South", "value": 119430 },
+        { "id": "USA", "parent": "top", "label": "USA", "value": 119330 },
+        { "id": "Thailand", "parent": "top", "label": "Thailand", "value": 114010 },
+        { "id": "Iraq", "parent": "top", "label": "Iraq", "value": 109630 },
+        { "id": "Ireland", "parent": "top", "label": "Ireland", "value": 103030 }
+      ],
+      "transform": [
+        { "type": "stratify", "key": "id", "parentKey": "parent" },
+        { "type": "treemap", "field": "value", "method": "squarify", "paddingInner": 4, "paddingOuter": 4, "round": true, "size": [{ "signal": "width" }, { "signal": "height" }] }
+      ]
+    }
+  ],
+  "scales": [
+    { "name": "fill", "type": "ordinal", "domain": ["Top 20", "Other"], "range": ["#2F4B7C", "#BDBDBD"] },
+    { "name": "leaf", "type": "ordinal", "domain": { "data": "tree", "field": "data.label" }, "range": { "scheme": "tableau20" } }
+  ],
+  "marks": [
+    {
+      "type": "rect",
+      "from": { "data": "tree", "transform": [{ "type": "filter", "expr": "datum.depth > 0" }] },
+      "encode": {
+        "enter": {
+          "x": { "field": "x0" },
+          "y": { "field": "y0" },
+          "x2": { "field": "x1" },
+          "y2": { "field": "y1" },
+          "stroke": { "value": "#ffffff" },
+          "strokeWidth": { "value": 1 }
+        },
+        "update": {
+          "fill": { "signal": "datum.depth === 1 ? scale('fill', datum.data.group) : scale('leaf', datum.data.label)" },
+          "tooltip": { "signal": "(datum.data.label || datum.data.key) + ': ' + format(datum.value, ',')" }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": { "data": "tree", "transform": [{ "type": "filter", "expr": "datum.depth > 0 && (datum.x1 - datum.x0) > 50 && (datum.y1 - datum.y0) > 22" }] },
+      "encode": {
+        "enter": {
+          "x": { "signal": "(datum.x0 + datum.x1) / 2" },
+          "y": { "signal": "(datum.y0 + datum.y1) / 2 - 7" },
+          "align": { "value": "center" },
+          "baseline": { "value": "middle" },
+          "fontWeight": { "value": "700" },
+          "fontSize": { "signal": "max(9, min(14, min(datum.x1 - datum.x0, datum.y1 - datum.y0) / 8))" },
+          "fill": { "signal": "datum.data.group === 'Other' ? '#333333' : '#ffffff'" }
+        },
+        "update": { "text": { "signal": "datum.data.label || datum.data.key" } }
+      }
+    },
+    {
+      "type": "text",
+      "from": { "data": "tree", "transform": [{ "type": "filter", "expr": "datum.depth > 0 && (datum.x1 - datum.x0) > 50 && (datum.y1 - datum.y0) > 40" }] },
+      "encode": {
+        "enter": {
+          "x": { "signal": "(datum.x0 + datum.x1) / 2" },
+          "y": { "signal": "(datum.y0 + datum.y1) / 2 + 11" },
+          "align": { "value": "center" },
+          "baseline": { "value": "middle" },
+          "fontSize": { "signal": "max(8, min(12, min(datum.x1 - datum.x0, datum.y1 - datum.y0) / 10))" },
+          "fill": { "signal": "datum.data.group === 'Other' ? '#333333' : '#ffffff'" }
+        },
+        "update": { "text": { "signal": "format(datum.value, ',')" } }
+      }
+    }
+  ]
+}

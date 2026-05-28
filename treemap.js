@@ -1,4 +1,4 @@
-const width = 300;
+const width = 500;
 const height = 320;
 
 const color = d3.scaleOrdinal()
@@ -12,26 +12,79 @@ const color = d3.scaleOrdinal()
     "#FFA600"
   ]);
 
+function wrapSvgText(textSelection, width, lineHeight, maxLines) {
+  textSelection.each(function() {
+    const text = d3.select(this);
+    const fullText = text.text();
+    const chars = fullText.split("");
+    const x = text.attr("x") || 0;
+    const y = text.attr("y") || 0;
+    const dy = parseFloat(text.attr("dy")) || 0;
+
+    text.text(null);
+
+    let line = [];
+    let lineNumber = 0;
+    let tspan = text.append("tspan")
+      .attr("x", x)
+      .attr("y", y)
+      .attr("dy", dy + "em");
+
+    for (let i = 0; i < chars.length; i++) {
+      line.push(chars[i]);
+      tspan.text(line.join(""));
+
+      if (tspan.node().getComputedTextLength() > width && line.length > 1) {
+        line.pop();
+        tspan.text(line.join(""));
+        line = [chars[i]];
+        lineNumber += 1;
+
+        if (lineNumber >= maxLines - 1) {
+          const remaining = chars.slice(i).join("");
+          tspan = text.append("tspan")
+            .attr("x", x)
+            .attr("y", y)
+            .attr("dy", lineHeight + "em")
+            .text(remaining);
+          return;
+        }
+
+        tspan = text.append("tspan")
+          .attr("x", x)
+          .attr("y", y)
+          .attr("dy", lineHeight + "em")
+          .text(chars[i]);
+      }
+    }
+  });
+}
+
+// title: 
+
 d3.csv("data/immi_count_2024.csv").then(function(data) {
   data.forEach(function(d) {
-    d.daily_cost = +d.daily_cost;
+    d.no_2024 = +d.no_2024;
   });
 
-  const root = d3.hierarchy({
-    name: "European Cities",
-    children: data.map(function(d) {
-      return {
-        name: d.Country,
-        value: d.no_2024
-      };
-    })
-  })
-  .sum(function(d) {
-    return d.value;
-  })
-  .sort(function(a, b) {
-    return b.value - a.value;
-  });
+  // Sort countries by 2024 count and take top 20
+  const sorted = data.sort(function(a, b) { return b.no_2024 - a.no_2024; });
+  const topN = 20;
+  const top = sorted.slice(0, topN);
+  const rest = sorted.slice(topN);
+
+  // Build hierarchy: one parent for Top 20 (with children) and one node for Other
+  const topChildren = top.map(function(d) { return { name: d.Country, value: d.no_2024 }; });
+  const otherSum = d3.sum(rest, function(d) { return d.no_2024; });
+
+  const children = [
+    { name: 'Top 20', children: topChildren },
+  ];
+  if (otherSum > 0) children.push({ name: 'Other', value: otherSum });
+
+  const root = d3.hierarchy({ name: "European Cities", children: children })
+    .sum(function(d) { return d.value; })
+    .sort(function(a, b) { return b.value - a.value; });
 
   d3.treemap()
     .size([width, height])
@@ -45,41 +98,73 @@ d3.csv("data/immi_count_2024.csv").then(function(data) {
     .attr("height", height)
     .style("font", "14px sans-serif");
 
-  const leaf = svg.selectAll("g")
+  // Draw group rectangles for depth-1 nodes (e.g., 'Top 20') so it appears as one block
+  const groups = svg.selectAll("g.group")
+    .data(root.children)
+    .enter()
+    .append("g")
+    .attr("class", "group")
+    .attr("transform", function(d) { return "translate(" + d.x0 + "," + d.y0 + ")"; });
+
+  groups.append("rect")
+    .attr("width", function(d) { return d.x1 - d.x0; })
+    .attr("height", function(d) { return d.y1 - d.y0; })
+    .attr("fill", function(d) { return d.data.name === 'Other' ? '#bdbdbd' : '#f5f5f5'; })
+    .attr("stroke", "#ccc");
+
+  groups.append("text")
+    .attr("x", 6)
+    .attr("y", 16)
+    .attr("fill", "#333")
+    .style("font-weight", "700")
+    .text(function(d) { return d.data.name; });
+
+  // Now draw leaves (depth >= 2 and also 'Other' which is depth 1 but a leaf)
+  const leaves = svg.selectAll("g.leaf")
     .data(root.leaves())
     .enter()
     .append("g")
-    .attr("transform", function(d) {
-      return "translate(" + d.x0 + "," + d.y0 + ")";
-    });
+    .attr("class", "leaf")
+    .attr("transform", function(d) { return "translate(" + d.x0 + "," + d.y0 + ")"; });
 
-  leaf.append("rect")
-    .attr("width", function(d) {
-      return d.x1 - d.x0;
-    })
-    .attr("height", function(d) {
-      return d.y1 - d.y0;
-    })
-    .attr("fill", function(d, i) {
-      return color(i);
-    })
+  leaves.append("rect")
+    .attr("width", function(d) { return d.x1 - d.x0; })
+    .attr("height", function(d) { return d.y1 - d.y0; })
+    .attr("fill", function(d, i) { return d.data.name === 'Other' ? '#bdbdbd' : color(i); })
     .attr("stroke", "#fff");
 
-  leaf.append("text")
+  leaves.append("clipPath")
+    .attr("id", function(d, i) { return "leaf-clip-" + i; })
+    .append("rect")
+    .attr("width", function(d) { return d.x1 - d.x0; })
+    .attr("height", function(d) { return d.y1 - d.y0; });
+
+  leaves.append("text")
     .attr("x", 8)
-    .attr("y", 20)
+    .attr("y", 18)
     .attr("fill", "white")
     .style("font-weight", "600")
-    .text(function(d) {
-      return d.data.name;
-    });
+    .style("font-size", function(d) {
+      const boxWidth = d.x1 - d.x0;
+      const boxHeight = d.y1 - d.y0;
+      return Math.max(9, Math.min(12, Math.min(boxWidth / 12, boxHeight / 8))) + "px";
+    })
+    .attr("clip-path", function(d, i) { return "url(#leaf-clip-" + i + ")"; })
+    .text(function(d) { return d.data.name; });
 
-  leaf.append("text")
+  wrapSvgText(leaves.selectAll("text").filter(function(_, i) { return i === 0; }), 110, 1.1, 3);
+
+  leaves.append("text")
     .attr("x", 8)
     .attr("y", 38)
     .attr("fill", "white")
-    .style("font-size", "12px")
-    .text(function(d) {
-      return "$" + d.data.value;
-    });
+    .style("font-size", function(d) {
+      const boxWidth = d.x1 - d.x0;
+      const boxHeight = d.y1 - d.y0;
+      return Math.max(8, Math.min(11, Math.min(boxWidth / 14, boxHeight / 10))) + "px";
+    })
+    .attr("clip-path", function(d, i) { return "url(#leaf-clip-" + i + ")"; })
+    .text(function(d) { return d.data.value; });
+
+  wrapSvgText(leaves.selectAll("text").filter(function(_, i) { return i === 1; }), 110, 1.05, 2);
 });

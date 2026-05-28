@@ -1,7 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "background": "transparent",
   "description": "A basic grouped bar chart example.",
-  "width": 300,
+  "width": 400,
   "height": 240,
   "padding": 5,
 
@@ -37,8 +38,30 @@
   ],
 
   "axes": [
-    {"orient": "bottom", "scale": "xscale", "tickSize": 0, "labelPadding": 4, "zindex": 1},
-    {"orient": "left", "scale": "yscale"}
+    {
+      "orient": "bottom",
+      "scale": "xscale",
+      "tickSize": 0,
+      "labelPadding": 4,
+      "zindex": 1,
+      "labelAngle": 45,
+      "labelAlign": "left",
+      "title": "years to permanentship"
+    },
+    {
+      "orient": "left",
+      "scale": "yscale",
+      "title": "%"
+    }
+  ],
+
+  "legends": [
+    {
+      "fill": "color",
+      "title": "Visa Type",
+      "orient": "top-right",
+      "offset": 8
+    }
   ],
 
   "marks": [
@@ -81,9 +104,10 @@
             "enter": {
               "x": {"scale": "pos", "field": "visa"},
               "width": {"scale": "pos", "band": 1},
-              "y": {"scale": "yscale", "field": "percent"},
-              "y2": {"scale": "yscale", "value": 0},
-              "fill": {"scale": "color", "field": "visa"}
+                "y": {"scale": "yscale", "field": "percent"},
+                "y2": {"scale": "yscale", "value": 0},
+                "fill": {"scale": "color", "field": "visa"},
+                "tooltip": {"signal": "datum.visa + ': ' + format(datum.percent, '.1f') + '%'"}
             }
           }
         }

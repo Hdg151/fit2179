@@ -161,7 +161,7 @@
           "as": "strokeWidth"
         },
         {
-          "type": "formula",
+          "type": "formula",a
           "expr": "datum.size/domain('y')[1]",
           "as": "percentage"
         }

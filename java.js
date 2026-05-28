@@ -1,4 +1,7 @@
-const embedOptions = { renderer: "svg" };
+const embedOptions = { 
+    renderer: "svg",
+    background: "transparent"
+};
 
 const vg_1 = "plot_json/aus_born_vs_overseas.json";
 vegaEmbed("#aus_born_vs_overseas", vg_1, embedOptions).then(function(result) {
@@ -41,6 +44,11 @@ vegaEmbed("#lga_heat_map", vg_8, embedOptions).then(function(result) {
 }).catch(console.error);
 
 const vg_9 = "plot_json/state_pie_chart.json";
-vegaEmbed("#state_pie_chart", vg_9, embedOptions).then(function(result) {
+vegaEmbed("#state_tree_map", vg_9, embedOptions).then(function(result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+}).catch(console.error);
+
+const vg_10 = "plot_json/treemap.json";
+vegaEmbed("#treemap_1", vg_10, embedOptions).then(function(result) {
     // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
 }).catch(console.error);

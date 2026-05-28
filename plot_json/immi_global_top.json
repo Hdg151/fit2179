@@ -1,29 +1,85 @@
 {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "data": {
-        "url": "data/immi_global_top.csv"
-    },
-    "width": 200,
-    "title": { "text": "Countries with top immigrant count" },
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "transparent",
+  "data": { "url": "data/immi_global_top.csv" },
+  "width": 400,
+  "height":273,
+  "title": { "text": "Countries with top immigrant count" },
+  "config": {
+    "range": {
+        "category": [
+            "#2F4B7C",
+            "#665191",
+            "#A05195",
+            "#D45087",
+            "#F95D6A",
+            "#FF7C43",
+            "#FFA600"
+        ]
+    }
+  },
 
-    "transform":[{"filter": "datum.Country != \"World\" && datum.Country != \"India\""}],
-
-    "layer": [
-        {
-            "mark": "circle",
-            "encoding": {
-                "x": {
-                    "field": "pop_2024", "type": "quantitative",
-                    "title":"Total Population",
-                    "scale":{"type":"log"}
-                },
-                "y": {
-                    "field": "million_2024", "type":"quantitative",
-                    "title":"Immigrants (millions)",
-                    "scale": {"type":"log"}
-                },
-                "size": { "field": "percent_2024", "type": "quantitative", "title":"Immigrants (percents)"}
+  "transform": [
+    { "filter": "datum.Country != \"World\" && datum.Country != \"India\"" },
+    {
+      "calculate": "datum.Country == 'Australia' ? 'Australia' : 'Other'",
+      "as": "highlight"
+    }
+  ],
+  "layer": [
+    {
+      "mark": "circle",
+      "encoding": {
+        "y": {
+          "field": "Country",
+          "type": "nominal",
+          "title": "Total Population",
+          "axis": {
+            "labelColor": {
+              "condition": {
+                "test": "datum.value == 'Australia'",
+                "value": "#e6820a"
+              },
+              "value": "gray"
+            },
+            "labelFontWeight": {
+              "condition": {
+                "test": "datum.value == 'Australia'",
+                "value": "bold"
+              },
+              "value": "normal"
             }
+          }
+        },
+        "x": {
+          "field": "million_2024",
+          "type": "quantitative",
+          "title": "Total Immigrants (millions)"
+        },
+        "size": {
+          "field": "percent_2024",
+          "type": "quantitative",
+          "title": "Normalised immigrant percents",
+         "legend": {
+            "orient": "top-right",
+            "offset": 0
         }
-    ]
+        },
+        "tooltip": [
+          {"field":"Country","type":"nominal"},
+          {"field":"million_2024","type":"quantitative","title":"Millions 2024"},
+          {"field":"percent_2024","type":"quantitative","title":"Percent 2024","format":".1%"}
+        ],
+        "color": {
+          "field": "highlight",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Australia", "Other"],
+            "range": ["#e6820a", "#2F4B7C"]
+          },
+          "legend": null
+        }
+      }
+    }
+  ]
 }

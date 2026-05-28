@@ -1,7 +1,9 @@
 {
   "$schema": "https://vega.github.io/schema/vega/v5.2.json",
+  "background": "transparent",
   "height": 300,
   "width": 600,
+  "title":{"text":"Top 10 region of immigrant count to Australian states"},
   "data": [
     {
       "name": "rawData",
@@ -196,13 +198,24 @@
     {
       "name": "color",
       "type": "ordinal",
-      "range": "category",
+      "range": [
+        "#2F4B7C",
+        "#665191",
+        "#A05195",
+        "#D45087",
+        "#F95D6A",
+        "#FF7C43",
+        "#FFA600",
+        "#118AB2",
+        "#06A77D",
+        "#8D99AE"
+      ],
       "domain": {"data": "filteredData", "field": "stk1"}
     },
     {
       "name": "color2",
       "type": "ordinal",
-      "range": ["#e41a1c", "#e41a1c", "#377eb8", "#377eb8", "#377eb8"],
+      "range": ["#2F4B7C","#639FAB","#dc2f02","#ffba08","#f48c06"],
       "domain": {"data": "filteredData", "field": "stk2"}
     },
     {
@@ -299,7 +312,7 @@
           "baseline": {"value": "middle"},
           "fontWeight": {"value": "bold"},
           "text": {
-            "signal": "abs(datum.scaledY0-datum.scaledY1) > 13 ? datum.grpId : ''"
+            "signal": "abs(datum.scaledY0-datum.scaledY1) > 10 ? datum.grpId : ''"
           }
         }
       }

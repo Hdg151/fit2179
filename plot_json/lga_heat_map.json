@@ -1,9 +1,18 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "COVID-19 Active Cases (10 Oct 2020)",
-  "width": 800,
-  "height": 400,
-  "projection": {"type": "mercator"},
+  "background": "transparent",
+  "title": {
+    "text": "Percent of overseas born population - Australian Local Government Area (LGA)",
+    "anchor": "middle"
+  },
+  "width": 550,
+  "height": 550,
+  "projection": {
+    "type": "mercator",
+    "center": [134, -25],
+    "scale": {"signal": "1.2 * min(width, height)"},
+    "translate": {"signal": "[width / 2, height / 2]"}
+  },
   "data": {
     "url": "LGA_2025_AUST_GDA2020.json",
     "format": {"type": "topojson", "feature": "LGA_2025_AUST_GDA2020"}
@@ -24,12 +33,27 @@
       }
     }
   ],
-  "mark": {"type": "geoshape"},
+  "mark": {"type": "geoshape",
+          "stroke": "#666666",
+          "strokeWidth": 0.3},
   "encoding": {
     "color": {
       "field": "Total_born_overseas",
-      "type": "quantitative"
-      ,"scale": { "zero": true }
+      "type": "quantitative",
+      "scale": {
+        "type": "threshold",
+        "domain": [5, 10, 15, 25],
+        "zero": true,
+        "range": ["#f7fbff", "#c6dbef", "#6baed6", "#3182bd", "#08519c"]
+      },
+      "legend": {
+        "orient": "top-right",
+        "direction": "vertical",
+        "title": "Total born overseas",
+        "titleAlign": "right",
+        "titleAnchor": "end",
+        "values": [0, 5, 10, 15, 25]
+      }
     },
     "tooltip": [
       {"field": "Label", "type": "nominal", "title": "State"},
