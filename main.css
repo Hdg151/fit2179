@@ -2,6 +2,17 @@
 .blend {
   opacity: 0;
 }
+
+/* Highlight keywords to match the aus_born_vs_overseas chart */
+.australia-born {
+  color: #F95D6A;
+  font-weight: 700;
+}
+.overseas-born {
+  color: #FFA600;
+  font-weight: 700;
+}
+
 /* Other styles continue here */
 :root {
   --page: #f6f1e8;
