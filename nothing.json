@@ -1,205 +1,206 @@
 {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "background": "transparent",
-  "title": {
-    "text": "Bivariate choropleth: Region max × overseas-born share by LGA",
-    "anchor": "middle",
-    "subtitle": "Each Region_max keeps one hue family; only brightness changes across the overseas-born bins"
-  },
-  "width": 550,
-  "height": 550,
-
-  "params":[
-    {
-      "name": "zoom_level",
-      "value": 710,
-      "bind": {
-        "input": "range",
-        "min": 710,
-        "max": 12000,
-        "step": 500,
-        "name": "Zoom: "
-      }
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "background": "transparent",
+    "data": {
+        "url": "data/aus_born_vs_overseas.csv"
     },
-    {
-      "name": "center_to",
-      "value": [134, -27],
-      "bind": {
-        "input": "select",
-        "options": [
-          [134, -27],
-          [144.9631, -37.8136],
-          [151.2093, -33.8688],
-          [153.0251, -27.4698],
-          [115.8605, -31.9505],
-          [138.6007, -34.9285],
-          [149.1300, -35.2809],
-          [147.3272, -42.8821],
-          [130.8456, -12.4634],
-          [153.3980, -28.0167],
-          [151.7829, -32.9283],
-          [150.8931, -34.4278]
-        ],
-        "labels": [
-          "Whole of Australia",
-          "Greater Melbourne",
-          "Greater Sydney",
-          "Greater Brisbane",
-          "Greater Perth",
-          "Greater Adelaide",
-          "Canberra",
-          "Hobart",
-          "Darwin",
-          "Gold Coast",
-          "Newcastle",
-          "Wollongong"
-        ],
-        "name": "Map Centre: "
-      }
-    }
-  ],
+    "vconcat":[
+        {
+            "width": 800,
+            "height":250,
+            "title": { "text": "Proportion in Australian Population" },
+            "config": {
+            "range": {
+                "category": [
+                    "#2F4B7C",
+                    "#665191",
+                    "#A05195",
+                    "#D45087",
+                    "#F95D6A",
+                    "#FF7C43",
+                    "#FFA600"
+                    ]
+                }
+            },
+            "transform": [
+                {"calculate": "datum.name == \"aus_born\" ? 'Australian born' : 'Overseas born'", "as": "name"},
+                {"calculate": "'overseas_percent'", "as": "Overseas percent Legend"}
+            ],
 
-  "projection": {
-    "type": "mercator",
-    "center": {"expr": "center_to"},
-    "scale": {"expr": "zoom_level"},
-    "translate": {"signal": "[width / 2, height / 2]"}
-  },
-  "data": {
-    "url": "LGA_2025_AUST_GDA2020.json",
-    "format": {"type": "topojson", "feature": "LGA_2025_AUST_GDA2020"}
-  },
-  "transform": [
-    {
-      "lookup": "properties.LGA_CODE25",
-      "from": {
-        "data": {
-          "url": "data/lga_heat_map.csv",
-          "format": { "type": "csv" },
-          "transform": [
-            { "filter": "datum.Year === '2021'" }
-          ]
+            "encoding": {
+                "x": {
+                    "field": "Year",
+                    "type": "ordinal",
+                    "title": "Year",
+                    "axis": {
+                        "orient": "bottom",
+                        "values": ["1891", "1910", "1930", "1950", "1970", "1990", "2010", "2025"]
+                    }
+                }
+            },
+            "layer": [
+                {
+                    "mark":"area",
+                    "encoding":{
+                        "y": {
+                                "field": "value", "type": "quantitative", "title": "People (millions)",
+                                "scale": {"domain": [0, 35]}
+                            },
+                        "color": {"field":"name", "type": "nominal", "title":"Origin","scale": {"range": ["#F95D6A", "#FFA600"]}}
+                                        ,"tooltip": [
+                                            {"field":"Year","type":"ordinal"},
+                                            {"field":"value","type":"quantitative","title":"People (millions)"},
+                                            {"field":"name", "type":"nominal","title":"Origin"}
+                                        ]
+                    }
+                },
+                {
+                    "mark": { "type": "line","strokeWidth": 4},
+                    "transform": [
+                        { "calculate": "'Overseas-born percent'", "as": "legendLabel" }
+                    ],
+                    "encoding":{
+                        "y": {"field": "overseas_percent", "aggregate": "min", "type":"quantitative","title":"%","scale": {"domain": [0, 35]}},
+                        "color": {"field": "legendLabel","type": "nominal"},
+                        
+                        "stroke": {
+                            "field": "Overseas percent Legend",
+                            "scale": {"range": ["#665191"]},
+                            "legend": {"title": ""}
+                        },
+                        "tooltip": [
+                            {"field":"Year","type":"ordinal"},
+                            {"field":"overseas_percent","type":"quantitative","title":"Overseas %"}
+                        ]
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "rule",
+                        "color": "black",
+                        "strokeWidth": 2
+                    },
+                    "encoding": {
+                        "x": {"datum": "1945"}
+                    }
+                    },
+                    {
+                    "mark": {
+                        "type": "text",
+                        "align": "left",
+                        "baseline": "middle",
+                        "dx": 6,
+                        "dy": -30,
+                        "fontSize": 12,
+                        "fontWeight": "bold"
+                    },
+                    "encoding": {
+                        "x": {"datum": "1946"},
+                        "text": {"value": "end of WWII"}
+                    }
+                }
+            ],
+            "resolve": {"scale": {"y": "independent"}}
         },
-        "key": "Code",
-        "fields": [
-          "Total_born_overseas",
-          "Label",
-          "Region_max",
-          "born_overseas_class",
-          "bivariate_class",
-          "North_West_Europe",
-          "Southern_and_Eastern_Europe",
-          "North_Africa_and_the_Middle_East",
-          "South_East_Asia",
-          "North_East_Asia",
-          "Southern_and_Central_Asia",
-          "Sub_Saharan_Africa"
-        ]
-      }
-    },
-    {
-      "calculate": "datum.Region_max && datum.born_overseas_class ? datum.Region_max + '|' + datum.born_overseas_class : 'NA|NA'",
-      "as": "region_bivariate_class"
-    }
-  ],
-  "mark": {"type": "geoshape",
-          "stroke": "#666666",
-          "strokeWidth": 0.3},
-  "encoding": {
-    "color": {
-      "field": "region_bivariate_class",
-      "type": "nominal",
-      "legend": null,
-      "scale": {
-        "domain": [
-          "NA|NA",
-          "North West Europe|Very Low (≤5)",
-          "North West Europe|Low (5–10)",
-          "North West Europe|Medium (10–15)",
-          "North West Europe|High (15–25)",
-          "North West Europe|Very High (>25)",
-          "South East Asia|Very Low (≤5)",
-          "South East Asia|Low (5–10)",
-          "South East Asia|Medium (10–15)",
-          "South East Asia|High (15–25)",
-          "South East Asia|Very High (>25)",
-          "Southern and Central Asia|Very Low (≤5)",
-          "Southern and Central Asia|Low (5–10)",
-          "Southern and Central Asia|Medium (10–15)",
-          "Southern and Central Asia|High (15–25)",
-          "Southern and Central Asia|Very High (>25)",
-          "Southern and Eastern Europe|Very Low (≤5)",
-          "Southern and Eastern Europe|Low (5–10)",
-          "Southern and Eastern Europe|Medium (10–15)",
-          "Southern and Eastern Europe|High (15–25)",
-          "Southern and Eastern Europe|Very High (>25)",
-          "Sub Saharan Africa|Very Low (≤5)",
-          "Sub Saharan Africa|Low (5–10)",
-          "Sub Saharan Africa|Medium (10–15)",
-          "Sub Saharan Africa|High (15–25)",
-          "Sub Saharan Africa|Very High (>25)",
-          "North East Asia|Very Low (≤5)",
-          "North East Asia|Low (5–10)",
-          "North East Asia|Medium (10–15)",
-          "North East Asia|High (15–25)",
-          "North East Asia|Very High (>25)",
-          "North Africa and the Middle East|Very Low (≤5)",
-          "North Africa and the Middle East|Low (5–10)",
-          "North Africa and the Middle East|Medium (10–15)",
-          "North Africa and the Middle East|High (15–25)",
-          "North Africa and the Middle East|Very High (>25)"
-        ],
-        "range": [
-          "#d9d9d9",
-          "#E7F5FD",
-          "#BFE5FA",
-          "#81C9F2",
-          "#56B4E9",
-          "#2C8DC8",
-          "#FFF4D6",
-          "#FFE6A8",
-          "#F7CE6B",
-          "#E69F00",
-          "#B97300",
-          "#E3F6EF",
-          "#B6EAD5",
-          "#6FD0A6",
-          "#009E73",
-          "#007A5E",
-          "#FFFBE0",
-          "#FFF2A6",
-          "#F6E56A",
-          "#F0E442",
-          "#CBBE1A",
-          "#E2EFFA",
-          "#B7D8F4",
-          "#73AEE3",
-          "#0072B2",
-          "#005A8D",
-          "#FDE7D8",
-          "#F9C6A9",
-          "#F18D5A",
-          "#D55E00",
-          "#A84A00",
-          "#F3E0EE",
-          "#E5B9D9",
-          "#D28DC1",
-          "#CC79A7",
-          "#A95B88"
-        ]
-      }
-    },
-    "tooltip": [
-      {"field": "Label", "type": "nominal", "title": "LGA"},
-      {"field": "Region_max", "type": "nominal", "title": "Region max"},
-      {"field": "Total_born_overseas", "type": "quantitative", "title": "Total born overseas (%)", "format": ".1f"},
-      {"field": "North_West_Europe", "type": "quantitative", "title": "North West Europe (%)", "format": ".1f"},
-      {"field": "Southern_and_Eastern.Europe", "type": "quantitative", "title": "Southern & Eastern Europe (%)", "format": ".1f"},
-      {"field": "North_Africa_and_the_Middle_East", "type": "quantitative", "title": "North Africa & Middle East (%)", "format": ".1f"},
-      {"field": "South_East_Asia", "type": "quantitative", "title": "South East Asia (%)", "format": ".1f"},
-      {"field": "North_East_Asia", "type": "quantitative", "title": "North East Asia (%)", "format": ".1f"},
-      {"field": "Southern_and_Central_Asia", "type": "quantitative", "title": "Southern & Central Asia (%)", "format": ".1f"},
-      {"field": "Sub_Saharan_Africa", "type": "quantitative", "title": "Sub-Saharan Africa (%)", "format": ".1f"}
+        {
+            "width": 800,
+            "height":60,
+
+            
+            
+            "config": {
+            "range": {
+                "category": [
+                    "#2F4B7C",
+                    "#665191",
+                    "#A05195",
+                    "#D45087",
+                    "#F95D6A",
+                    "#FF7C43",
+                    "#FFA600"
+                    ]
+                }
+            },
+            
+            "transform": [
+                {"calculate": "datum.name == \"aus_born\" ? 'Australian born' : 'Overseas born'", "as": "name"},
+                {"calculate": "'overseas_percent'", "as": "Overseas percent Legend"}
+            ],
+
+            "encoding": {
+                "x": {
+                    "field": "Year",
+                    "type": "temporal",
+                    "title": "Year",
+                    "axis": {
+                        "orient": "bottom",
+                        "values": ["1891", "1910", "1930", "1950", "1970", "1990", "2010", "2025"]
+                    }
+                }
+            },
+            "layer": [
+                {
+                    "mark":"area",
+                    "encoding":{
+                        "y": {
+                                "field": "value", "type": "quantitative", "title": "",
+                                "scale": {"domain": [0, 35]}
+                            },
+                        "color": {"field":"name", "type": "nominal", "title":"Origin","scale": {"range": ["#F95D6A", "#FFA600"]}}
+                                        ,"tooltip": [
+                                            {"field":"Year","type":"ordinal"},
+                                            {"field":"value","type":"quantitative","title":"People (millions)"},
+                                            {"field":"name", "type":"nominal","title":"Origin"}
+                                        ]
+                    }
+                },
+                {
+                    "mark": { "type": "line","strokeWidth": 4},
+                    "transform": [
+                        { "calculate": "'Overseas-born percent'", "as": "legendLabel" }
+                    ],
+                    "encoding":{
+                        "y": {"field": "overseas_percent", "aggregate": "min", "type":"quantitative","title":"","scale": {"domain": [0, 35]}},
+                        "color": {"field": "legendLabel","type": "nominal"},
+                        
+                        "stroke": {
+                            "field": "Overseas percent Legend",
+                            "scale": {"range": ["#665191"]},
+                            "legend": {"title": ""}
+                        },
+                        "tooltip": [
+                            {"field":"Year","type":"ordinal"},
+                            {"field":"overseas_percent","type":"quantitative","title":"Overseas %"}
+                        ]
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "rule",
+                        "color": "black",
+                        "strokeWidth": 2
+                    },
+                    "encoding": {
+                        "x": {"datum": "1945"}
+                    }
+                    },
+                    {
+                    "mark": {
+                        "type": "text",
+                        "align": "left",
+                        "baseline": "middle",
+                        "dx": 6,
+                        "dy": -30,
+                        "fontSize": 12,
+                        "fontWeight": "bold"
+                    },
+                    "encoding": {
+                        "x": {"datum": "1946"},
+                        "text": {"value": "end of WWII"}
+                    }
+                }
+            ],
+            "resolve": {"scale": {"y": "independent"}}
+        }
     ]
-  }
 }
