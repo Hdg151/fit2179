@@ -150,6 +150,8 @@
           "North Africa and the Middle East|Very High (>25)"
         ],
         "range": [
+          "#d8d8d8",
+
           "#D6EEF8",
           "#AADAF3",
           "#88CCEE",
