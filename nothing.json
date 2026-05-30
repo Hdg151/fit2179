@@ -1,397 +1,205 @@
 {
-  "$schema": "https://vega.github.io/schema/vega/v5.2.json",
-  "height": 300,
-  "width": 600,
-  "data": [
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "transparent",
+  "title": {
+    "text": "Bivariate choropleth: Region max × overseas-born share by LGA",
+    "anchor": "middle",
+    "subtitle": "Each Region_max keeps one hue family; only brightness changes across the overseas-born bins"
+  },
+  "width": 550,
+  "height": 550,
+
+  "params":[
     {
-      "name": "rawData",
-      "url": "data/state_origin_sankey.csv",
-      "format": {"type": "csv"},
-      "transform": [
-        {"type": "formula", "expr": "datum.country", "as": "stk1"},
-        {"type": "formula", "expr": "replace(datum.state, /\\.+/g, ' ')", "as": "stk2"},
-        {"type": "formula", "expr": "+datum.number", "as": "size"}
-      ]
+      "name": "zoom_level",
+      "value": 710,
+      "bind": {
+        "input": "range",
+        "min": 710,
+        "max": 12000,
+        "step": 500,
+        "name": "Zoom: "
+      }
     },
     {
-      "name": "countryTotals",
-      "source": "rawData",
-      "transform": [
-        {
-          "type": "aggregate",
-          "groupby": ["stk1"],
-          "fields": ["size"],
-          "ops": ["sum"],
-          "as": ["total"]
-        },
-        {
-          "type": "window",
-          "sort": {"field": "total", "order": "descending"},
-          "ops": ["rank"],
-          "as": ["rank"]
-        },
-        {"type": "filter", "expr": "datum.rank <= 10"}
-      ]
-    },
-    {
-      "name": "stateTotals",
-      "source": "rawData",
-      "transform": [
-        {
-          "type": "aggregate",
-          "groupby": ["stk2"],
-          "fields": ["size"],
-          "ops": ["sum"],
-          "as": ["total"]
-        },
-        {
-          "type": "window",
-          "sort": {"field": "total", "order": "descending"},
-          "ops": ["rank"],
-          "as": ["rank"]
-        },
-        {"type": "filter", "expr": "datum.rank <= 5"}
-      ]
-    },
-    {
-      "name": "filteredData",
-      "source": "rawData",
-      "transform": [
-        {
-          "type": "lookup",
-          "from": "countryTotals",
-          "key": "stk1",
-          "fields": ["stk1"],
-          "as": ["countryMatch"]
-        },
-        {
-          "type": "lookup",
-          "from": "stateTotals",
-          "key": "stk2",
-          "fields": ["stk2"],
-          "as": ["stateMatch"]
-        },
-        {"type": "filter", "expr": "datum.countryMatch && datum.stateMatch"}
-      ]
-    },
-    {
-      "name": "nodes",
-      "source": "filteredData",
-      "transform": [
-        {
-          "type": "filter",
-          "expr": "!groupSelector || groupSelector.stk1 == datum.stk1 || groupSelector.stk2 == datum.stk2"
-        },
-        {"type": "formula", "expr": "datum.stk1 + '|' + datum.stk2", "as": "key"},
-        {"type": "fold", "fields": ["stk1", "stk2"], "as": ["stack", "grpId"]},
-        {
-          "type": "formula",
-          "expr": "datum.stack == 'stk1' ? datum.stk1+' '+datum.stk2 : datum.stk2+' '+datum.stk1",
-          "as": "sortField"
-        },
-        {
-          "type": "stack",
-          "groupby": ["stack"],
-          "sort": {"field": "sortField", "order": "descending"},
-          "field": "size"
-        },
-        {"type": "formula", "expr": "(datum.y0+datum.y1)/2", "as": "yc"}
-      ]
-    },
-    {
-      "name": "groups",
-      "source": "nodes",
-      "transform": [
-        {
-          "type": "aggregate",
-          "groupby": ["stack", "grpId"],
-          "fields": ["size"],
-          "ops": ["sum"],
-          "as": ["total"]
-        },
-        {
-          "type": "stack",
-          "groupby": ["stack"],
-          "sort": {"field": "grpId", "order": "descending"},
-          "field": "total"
-        },
-        {"type": "formula", "expr": "scale('y', datum.y0)", "as": "scaledY0"},
-        {"type": "formula", "expr": "scale('y', datum.y1)", "as": "scaledY1"},
-        {
-          "type": "formula",
-          "expr": "datum.stack == 'stk1'",
-          "as": "rightLabel"
-        },
-        {
-          "type": "formula",
-          "expr": "datum.total/domain('y')[1]",
-          "as": "percentage"
-        }
-      ]
-    },
-    {
-      "name": "destinationNodes",
-      "source": "nodes",
-      "transform": [{"type": "filter", "expr": "datum.stack == 'stk2'"}]
-    },
-    {
-      "name": "edges",
-      "source": "nodes",
-      "transform": [
-        {"type": "filter", "expr": "datum.stack == 'stk1'"},
-        {
-          "type": "lookup",
-          "from": "destinationNodes",
-          "key": "key",
-          "fields": ["key"],
-          "as": ["target"]
-        },
-        {
-          "type": "linkpath",
-          "orient": "horizontal",
-          "shape": "diagonal",
-          "sourceY": {"expr": "scale('y', datum.yc)"},
-          "sourceX": {"expr": "scale('x', 'stk1') + bandwidth('x')"},
-          "targetY": {"expr": "scale('y', datum.target.yc)"},
-          "targetX": {"expr": "scale('x', 'stk2')"}
-        },
-        {
-          "type": "formula",
-          "expr": "range('y')[0]-scale('y', datum.size)",
-          "as": "strokeWidth"
-        },
-        {
-          "type": "formula",a
-          "expr": "datum.size/domain('y')[1]",
-          "as": "percentage"
-        }
-      ]
+      "name": "center_to",
+      "value": [134, -27],
+      "bind": {
+        "input": "select",
+        "options": [
+          [134, -27],
+          [144.9631, -37.8136],
+          [151.2093, -33.8688],
+          [153.0251, -27.4698],
+          [115.8605, -31.9505],
+          [138.6007, -34.9285],
+          [149.1300, -35.2809],
+          [147.3272, -42.8821],
+          [130.8456, -12.4634],
+          [153.3980, -28.0167],
+          [151.7829, -32.9283],
+          [150.8931, -34.4278]
+        ],
+        "labels": [
+          "Whole of Australia",
+          "Greater Melbourne",
+          "Greater Sydney",
+          "Greater Brisbane",
+          "Greater Perth",
+          "Greater Adelaide",
+          "Canberra",
+          "Hobart",
+          "Darwin",
+          "Gold Coast",
+          "Newcastle",
+          "Wollongong"
+        ],
+        "name": "Map Centre: "
+      }
     }
   ],
-  "scales": [
+
+  "projection": {
+    "type": "mercator",
+    "center": {"expr": "center_to"},
+    "scale": {"expr": "zoom_level"},
+    "translate": {"signal": "[width / 2, height / 2]"}
+  },
+  "data": {
+    "url": "LGA_2025_AUST_GDA2020.json",
+    "format": {"type": "topojson", "feature": "LGA_2025_AUST_GDA2020"}
+  },
+  "transform": [
     {
-      "name": "x",
-      "type": "band",
-      "range": "width",
-      "domain": ["stk1", "stk2"],
-      "paddingOuter": 0.05,
-      "paddingInner": 0.95
-    },
-    {
-      "name": "y",
-      "type": "linear",
-      "range": "height",
-      "domain": {"data": "nodes", "field": "y1"}
-    },
-    {
-      "name": "color",
-      "type": "ordinal",
-      "range": "category",
-      "domain": {"data": "filteredData", "field": "stk1"}
-    },
-    {
-      "name": "color2",
-      "type": "ordinal",
-      "range": ["#e41a1c", "#e41a1c", "#377eb8", "#377eb8", "#377eb8"],
-      "domain": {"data": "filteredData", "field": "stk2"}
-    },
-    {
-      "name": "stackNames",
-      "type": "ordinal",
-      "range": ["Source", "Destination"],
-      "domain": ["stk1", "stk2"]
-    }
-  ],
-  "axes": [
-    {
-      "orient": "bottom",
-      "scale": "x",
-      "encode": {
-        "labels": {
-          "update": {"text": {"scale": "stackNames", "field": "value"}}
-        }
-      }
-    },
-    {"orient": "left", "scale": "y"}
-  ],
-  "marks": [
-    {
-      "type": "path",
-      "name": "edgeMark",
-      "from": {"data": "edges"},
-      "clip": true,
-      "encode": {
-        "update": {
-          "stroke": [
-            {
-              "test": "groupSelector && groupSelector.stack=='stk1'",
-              "scale": "color2",
-              "field": "stk2"
-            },
-            {"scale": "color2", "field": "stk2"}
-          ],
-          "strokeWidth": {"field": "strokeWidth"},
-          "path": {"field": "path"},
-          "strokeOpacity": {
-            "signal": "!groupSelector && (groupHover.stk1 == datum.stk1 || groupHover.stk2 == datum.stk2) ? 0.9 : 0.3"
-          },
-          "zindex": {
-            "signal": "!groupSelector && (groupHover.stk1 == datum.stk1 || groupHover.stk2 == datum.stk2) ? 1 : 0"
-          },
-          "tooltip": {
-            "signal": "datum.stk1 + ' → ' + datum.stk2 + '    ' + format(datum.size, ',.0f') + '   (' + format(datum.percentage, '.1%') + ')'"
-          }
-        },
-        "hover": {"strokeOpacity": {"value": 1}}
-      }
-    },
-    {
-      "type": "rect",
-      "name": "groupMark",
-      "from": {"data": "groups"},
-      "encode": {
-        "enter": {
-          "width": {"scale": "x", "band": 1}
-        },
-        "update": {
-          "x": {"scale": "x", "field": "stack"},
-          "y": {"field": "scaledY0"},
-          "y2": {"field": "scaledY1"},
-          "fill": [
-            {
-              "test": "datum.stack == 'stk2'",
-              "scale": "color2",
-              "field": "grpId"
-            },
-            {"scale": "color", "field": "grpId"}
-          ],
-          "fillOpacity": {"value": 0.6},
-          "tooltip": {
-            "signal": "datum.grpId + '   ' + format(datum.total, ',.0f') + '   (' + format(datum.percentage, '.1%') + ')'"
-          }
-        },
-        "hover": {"fillOpacity": {"value": 1}}
-      }
-    },
-    {
-      "type": "text",
-      "from": {"data": "groups"},
-      "interactive": false,
-      "encode": {
-        "update": {
-          "x": {
-            "signal": "scale('x', datum.stack) + (datum.rightLabel ? bandwidth('x') + 8 : -8)"
-          },
-          "yc": {"signal": "(datum.scaledY0 + datum.scaledY1)/2"},
-          "align": {"signal": "datum.rightLabel ? 'left' : 'right'"},
-          "baseline": {"value": "middle"},
-          "fontWeight": {"value": "bold"},
-          "text": {
-            "signal": "abs(datum.scaledY0-datum.scaledY1) > 13 ? datum.grpId : ''"
-          }
-        }
-      }
-    },
-    {
-      "type": "group",
-      "data": [
-        {
-          "name": "dataForShowAll",
-          "values": [{}],
-          "transform": [{"type": "filter", "expr": "groupSelector"}]
-        }
-      ],
-      "encode": {
-        "enter": {
-          "xc": {"signal": "width/2"},
-          "y": {"value": 30},
-          "width": {"value": 80},
-          "height": {"value": 30}
-        }
-      },
-      "marks": [
-        {
-          "type": "group",
-          "name": "groupReset",
-          "from": {"data": "dataForShowAll"},
-          "encode": {
-            "enter": {
-              "cornerRadius": {"value": 6},
-              "fill": {"value": "#f5f5f5"},
-              "stroke": {"value": "#c1c1c1"},
-              "strokeWidth": {"value": 2},
-              "height": {"field": {"group": "height"}},
-              "width": {"field": {"group": "width"}}
-            },
-            "update": {"opacity": {"value": 1}},
-            "hover": {"opacity": {"value": 0.7}}
-          },
-          "marks": [
-            {
-              "type": "text",
-              "interactive": false,
-              "encode": {
-                "enter": {
-                  "xc": {"field": {"group": "width"}, "mult": 0.5},
-                  "yc": {
-                    "field": {"group": "height"},
-                    "mult": 0.5,
-                    "offset": 2
-                  },
-                  "align": {"value": "center"},
-                  "baseline": {"value": "middle"},
-                  "fontWeight": {"value": "bold"},
-                  "text": {"value": "Show All"}
-                }
-              }
-            }
+      "lookup": "properties.LGA_CODE25",
+      "from": {
+        "data": {
+          "url": "data/lga_heat_map.csv",
+          "format": { "type": "csv" },
+          "transform": [
+            { "filter": "datum.Year === '2021'" }
           ]
-        }
-      ]
+        },
+        "key": "Code",
+        "fields": [
+          "Total_born_overseas",
+          "Label",
+          "Region_max",
+          "born_overseas_class",
+          "bivariate_class",
+          "North_West_Europe",
+          "Southern_and_Eastern_Europe",
+          "North_Africa_and_the_Middle_East",
+          "South_East_Asia",
+          "North_East_Asia",
+          "Southern_and_Central_Asia",
+          "Sub_Saharan_Africa"
+        ]
+      }
     },
     {
-      "type": "rect",
-      "from": {"data": "nodes"},
-      "encode": {
-        "enter": {
-          "stroke": {"value": "#000"},
-          "strokeWidth": {"value": 0.0},
-          "width": {"scale": "x", "band": 1},
-          "x": {"scale": "x", "field": "stack"},
-          "y": {"field": "y0", "scale": "y"},
-          "y2": {"field": "y1", "scale": "y"}
-        }
-      }
+      "calculate": "datum.Region_max && datum.born_overseas_class ? datum.Region_max + '|' + datum.born_overseas_class : 'NA|NA'",
+      "as": "region_bivariate_class"
     }
   ],
-  "signals": [
-    {
-      "name": "groupHover",
-      "value": {},
-      "on": [
-        {
-          "events": "@groupMark:mouseover",
-          "update": "{stk1:datum.stack=='stk1' && datum.grpId, stk2:datum.stack=='stk2' && datum.grpId}"
-        },
-        {"events": "mouseout", "update": "{}"}
-      ]
+  "mark": {"type": "geoshape",
+          "stroke": "#666666",
+          "strokeWidth": 0.3},
+  "encoding": {
+    "color": {
+      "field": "region_bivariate_class",
+      "type": "nominal",
+      "legend": null,
+      "scale": {
+        "domain": [
+          "NA|NA",
+          "North West Europe|Very Low (≤5)",
+          "North West Europe|Low (5–10)",
+          "North West Europe|Medium (10–15)",
+          "North West Europe|High (15–25)",
+          "North West Europe|Very High (>25)",
+          "South East Asia|Very Low (≤5)",
+          "South East Asia|Low (5–10)",
+          "South East Asia|Medium (10–15)",
+          "South East Asia|High (15–25)",
+          "South East Asia|Very High (>25)",
+          "Southern and Central Asia|Very Low (≤5)",
+          "Southern and Central Asia|Low (5–10)",
+          "Southern and Central Asia|Medium (10–15)",
+          "Southern and Central Asia|High (15–25)",
+          "Southern and Central Asia|Very High (>25)",
+          "Southern and Eastern Europe|Very Low (≤5)",
+          "Southern and Eastern Europe|Low (5–10)",
+          "Southern and Eastern Europe|Medium (10–15)",
+          "Southern and Eastern Europe|High (15–25)",
+          "Southern and Eastern Europe|Very High (>25)",
+          "Sub Saharan Africa|Very Low (≤5)",
+          "Sub Saharan Africa|Low (5–10)",
+          "Sub Saharan Africa|Medium (10–15)",
+          "Sub Saharan Africa|High (15–25)",
+          "Sub Saharan Africa|Very High (>25)",
+          "North East Asia|Very Low (≤5)",
+          "North East Asia|Low (5–10)",
+          "North East Asia|Medium (10–15)",
+          "North East Asia|High (15–25)",
+          "North East Asia|Very High (>25)",
+          "North Africa and the Middle East|Very Low (≤5)",
+          "North Africa and the Middle East|Low (5–10)",
+          "North Africa and the Middle East|Medium (10–15)",
+          "North Africa and the Middle East|High (15–25)",
+          "North Africa and the Middle East|Very High (>25)"
+        ],
+        "range": [
+          "#d9d9d9",
+          "#E7F5FD",
+          "#BFE5FA",
+          "#81C9F2",
+          "#56B4E9",
+          "#2C8DC8",
+          "#FFF4D6",
+          "#FFE6A8",
+          "#F7CE6B",
+          "#E69F00",
+          "#B97300",
+          "#E3F6EF",
+          "#B6EAD5",
+          "#6FD0A6",
+          "#009E73",
+          "#007A5E",
+          "#FFFBE0",
+          "#FFF2A6",
+          "#F6E56A",
+          "#F0E442",
+          "#CBBE1A",
+          "#E2EFFA",
+          "#B7D8F4",
+          "#73AEE3",
+          "#0072B2",
+          "#005A8D",
+          "#FDE7D8",
+          "#F9C6A9",
+          "#F18D5A",
+          "#D55E00",
+          "#A84A00",
+          "#F3E0EE",
+          "#E5B9D9",
+          "#D28DC1",
+          "#CC79A7",
+          "#A95B88"
+        ]
+      }
     },
-    {
-      "name": "groupSelector",
-      "value": false,
-      "on": [
-        {
-          "events": "@groupMark:click!",
-          "update": "{stack:datum.stack, stk1:datum.stack=='stk1' && datum.grpId, stk2:datum.stack=='stk2' && datum.grpId}"
-        },
-        {
-          "events": [
-            {"type": "click", "markname": "groupReset"},
-            {"type": "dblclick"}
-          ],
-          "update": "false"
-        }
-      ]
-    }
-  ]
+    "tooltip": [
+      {"field": "Label", "type": "nominal", "title": "LGA"},
+      {"field": "Region_max", "type": "nominal", "title": "Region max"},
+      {"field": "Total_born_overseas", "type": "quantitative", "title": "Total born overseas (%)", "format": ".1f"},
+      {"field": "North_West_Europe", "type": "quantitative", "title": "North West Europe (%)", "format": ".1f"},
+      {"field": "Southern_and_Eastern.Europe", "type": "quantitative", "title": "Southern & Eastern Europe (%)", "format": ".1f"},
+      {"field": "North_Africa_and_the_Middle_East", "type": "quantitative", "title": "North Africa & Middle East (%)", "format": ".1f"},
+      {"field": "South_East_Asia", "type": "quantitative", "title": "South East Asia (%)", "format": ".1f"},
+      {"field": "North_East_Asia", "type": "quantitative", "title": "North East Asia (%)", "format": ".1f"},
+      {"field": "Southern_and_Central_Asia", "type": "quantitative", "title": "Southern & Central Asia (%)", "format": ".1f"},
+      {"field": "Sub_Saharan_Africa", "type": "quantitative", "title": "Sub-Saharan Africa (%)", "format": ".1f"}
+    ]
+  }
 }

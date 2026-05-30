@@ -4,95 +4,202 @@
     "data": {
         "url": "data/aus_born_vs_overseas.csv"
     },
-    "width": 600,
-    "height":250,
-    "title": { "text": "Proportion in Australian Population" },
-    "config": {
-      "range": {
-          "category": [
-              "#2F4B7C",
-              "#665191",
-              "#A05195",
-              "#D45087",
-              "#F95D6A",
-              "#FF7C43",
-              "#FFA600"
-            ]
-        }
-    },
-
-    "transform": [
-        {"calculate": "datum.name == \"aus_born\" ? 'Australian born' : 'Overseas born'", "as": "name"}
-    ],
-
-    "encoding": {
-        "x": {
-            "field": "Year",
-            "type": "ordinal",
-            "title": "Year",
-            "axis": {
-                "orient": "bottom",
-                "values": ["1891", "1910", "1930", "1950", "1970", "1990", "2010", "2025"]
-            }
-        }
-    },
-    "layer": [
+    "vconcat":[
         {
-            "mark":"area",
-            "encoding":{
-                "y": {
-                        "field": "value", "type": "quantitative", "title": "People (millions)",
-                        "scale": {"domain": [0, 35]}
-                     },
-                "color": {"field":"name", "type": "nominal", "title":"Origin","scale": {"range": ["#F95D6A", "#FFA600", "#665191"]}}
-                                ,"tooltip": [
-                                    {"field":"Year","type":"ordinal"},
-                                    {"field":"value","type":"quantitative","title":"People (millions)"}
-                                ]
-            }
-        },
-        {
-            "mark": { "type": "line" , "color": "#665191", "strokeWidth": 4},
-            "transform": [
-                { "calculate": "'Overseas-born percent'", "as": "legendLabel" }
-            ],
-            "encoding":{
-                "y": {"field": "overseas_percent", "aggregate": "min", "type":"quantitative","title":"%","scale": {"domain": [0, 35]}},
-                "color": {
-                "field": "legendLabel",
-                "type": "nominal"
+            "width": 800,
+            "height":250,
+            "title": { "text": "Proportion in Australian Population" },
+            "config": {
+            "range": {
+                "category": [
+                    "#2F4B7C",
+                    "#665191",
+                    "#A05195",
+                    "#D45087",
+                    "#F95D6A",
+                    "#FF7C43",
+                    "#FFA600"
+                    ]
                 }
-                                ,"tooltip": [
-                                    {"field":"Year","type":"ordinal"},
-                                    {"field":"overseas_percent","type":"quantitative","title":"Overseas %"}
-                                ]
-            }
+            },
+            "transform": [
+                {"calculate": "datum.name == \"aus_born\" ? 'Australian born' : 'Overseas born'", "as": "name"},
+                {"calculate": "'overseas_percent'", "as": "Overseas percent Legend"}
+            ],
+
+            "encoding": {
+                "x": {
+                    "field": "Year",
+                    "type": "ordinal",
+                    "title": "Year",
+                    "axis": {
+                        "orient": "bottom",
+                        "values": ["1891", "1910", "1930", "1950", "1970", "1990", "2010", "2025"]
+                    }
+                }
+            },
+            "layer": [
+                {
+                    "mark":"area",
+                    "encoding":{
+                        "y": {
+                                "field": "value", "type": "quantitative", "title": "People (millions)",
+                                "scale": {"domain": [0, 35]}
+                            },
+                        "color": {"field":"name", "type": "nominal", "title":"Origin","scale": {"range": ["#F95D6A", "#FFA600"]}}
+                                        ,"tooltip": [
+                                            {"field":"Year","type":"ordinal"},
+                                            {"field":"value","type":"quantitative","title":"People (millions)"},
+                                            {"field":"name", "type":"nominal","title":"Origin"}
+                                        ]
+                    }
+                },
+                {
+                    "mark": { "type": "line","strokeWidth": 4},
+                    "transform": [
+                        { "calculate": "'Overseas-born percent'", "as": "legendLabel" }
+                    ],
+                    "encoding":{
+                        "y": {"field": "overseas_percent", "aggregate": "min", "type":"quantitative","title":"%","scale": {"domain": [0, 35]}},
+                        "color": {"field": "legendLabel","type": "nominal"},
+                        
+                        "stroke": {
+                            "field": "Overseas percent Legend",
+                            "scale": {"range": ["#665191"]},
+                            "legend": {"title": ""}
+                        },
+                        "tooltip": [
+                            {"field":"Year","type":"ordinal"},
+                            {"field":"overseas_percent","type":"quantitative","title":"Overseas %"}
+                        ]
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "rule",
+                        "color": "black",
+                        "strokeWidth": 2
+                    },
+                    "encoding": {
+                        "x": {"datum": "1945"}
+                    }
+                    },
+                    {
+                    "mark": {
+                        "type": "text",
+                        "align": "left",
+                        "baseline": "middle",
+                        "dx": 6,
+                        "dy": -30,
+                        "fontSize": 12,
+                        "fontWeight": "bold"
+                    },
+                    "encoding": {
+                        "x": {"datum": "1946"},
+                        "text": {"value": "end of WWII"}
+                    }
+                }
+            ],
+            "resolve": {"scale": {"y": "independent"}}
         },
         {
-            "mark": {
-                "type": "rule",
-                "color": "black",
-                "strokeWidth": 2
+            "width": 800,
+            "height":60,
+            
+            "config": {
+            "range": {
+                "category": [
+                    "#2F4B7C",
+                    "#665191",
+                    "#A05195",
+                    "#D45087",
+                    "#F95D6A",
+                    "#FF7C43",
+                    "#FFA600"
+                    ]
+                }
             },
+            
+            "transform": [
+                {"calculate": "datum.name == \"aus_born\" ? 'Australian born' : 'Overseas born'", "as": "name"},
+                {"calculate": "'overseas_percent'", "as": "Overseas percent Legend"}
+            ],
+            
+
             "encoding": {
-                "x": {"datum": "1945"}
-            }
+                "x": {
+                    "field": "Year",
+                    "type": "ordinal",
+                    "title": "Year",
+                    "axis": {
+                        "orient": "bottom",
+                        "values": ["1891", "1910", "1930", "1950", "1970", "1990", "2010", "2025"]
+                    }
+                }
             },
-            {
-            "mark": {
-                "type": "text",
-                "align": "left",
-                "baseline": "middle",
-                "dx": 6,
-                "dy": -30,
-                "fontSize": 12,
-                "fontWeight": "bold"
-            },
-            "encoding": {
-                "x": {"datum": "1946"},
-                "text": {"value": "end of WWII"}
-            }
+            "layer": [
+                {
+                    "mark":"area",
+                    "encoding":{
+                        "y": {
+                                "field": "value", "type": "quantitative", "title": "",
+                                "scale": {"domain": [0, 35]}
+                            },
+                        "color": {"field":"name", "type": "nominal", "title":"Origin","scale": {"range": ["#F95D6A", "#FFA600"]}}
+                                        ,"tooltip": [
+                                            {"field":"Year","type":"ordinal"},
+                                            {"field":"value","type":"quantitative","title":"People (millions)"},
+                                            {"field":"name", "type":"nominal","title":"Origin"}
+                                        ]
+                    }
+                },
+                {
+                    "mark": { "type": "line","strokeWidth": 4},
+                    "transform": [
+                        { "calculate": "'Overseas-born percent'", "as": "legendLabel" }
+                    ],
+                    "encoding":{
+                        "y": {"field": "overseas_percent", "aggregate": "min", "type":"quantitative","title":"","scale": {"domain": [0, 35]}},
+                        "color": {"field": "legendLabel","type": "nominal"},
+                        
+                        "stroke": {
+                            "field": "Overseas percent Legend",
+                            "scale": {"range": ["#665191"]},
+                            "legend": {"title": ""}
+                        },
+                        "tooltip": [
+                            {"field":"Year","type":"ordinal"},
+                            {"field":"overseas_percent","type":"quantitative","title":"Overseas %"}
+                        ]
+                    }
+                },
+                {
+                    "mark": {
+                        "type": "rule",
+                        "color": "black",
+                        "strokeWidth": 2
+                    },
+                    "encoding": {
+                        "x": {"datum": "1945"}
+                    }
+                    },
+                    {
+                    "mark": {
+                        "type": "text",
+                        "align": "left",
+                        "baseline": "middle",
+                        "dx": 6,
+                        "dy": -30,
+                        "fontSize": 12,
+                        "fontWeight": "bold"
+                    },
+                    "encoding": {
+                        "x": {"datum": "1946"},
+                        "text": {"value": "end of WWII"}
+                    }
+                }
+            ],
+            "resolve": {"scale": {"y": "independent"}}
         }
-    ],
-    "resolve": {"scale": {"y": "independent"}}
+    ]
 }

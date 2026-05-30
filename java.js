@@ -48,7 +48,20 @@ vegaEmbed("#state_tree_map", vg_9, embedOptions).then(function(result) {
     // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
 }).catch(console.error);
 
-const vg_10 = "plot_json/treemap.json";
-vegaEmbed("#treemap_1", vg_10, embedOptions).then(function(result) {
+const vg_10 = "plot_json/lga_heat_map_legend.json";
+vegaEmbed("#lga_heat_map_legend", vg_10, embedOptions).then(function(result) {
     // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
 }).catch(console.error);
+
+const vg_11 = "plot_json/region_map.json";
+vegaEmbed("#region_map", vg_11, embedOptions).then(function(result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+}).catch(console.error);
+
+const vg_12 = "plot_json/treemap.json";
+vegaEmbed("#treemap_1", vg_12, embedOptions).then(function(result) {
+    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+}).catch(console.error);
+
+
+

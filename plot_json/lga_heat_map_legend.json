@@ -1,0 +1,58 @@
+{ "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": { "values": [
+
+    {"region": "North West Europe", "risk": "Very Low (≤5)",   "color": "#D6EEF8"},
+    {"region": "North West Europe", "risk": "Low (5–10)",      "color": "#AADAF3"},
+    {"region": "North West Europe", "risk": "Medium (10–15)",  "color": "#88CCEE"},
+    {"region": "North West Europe", "risk": "High (15–25)",    "color": "#4AAAD4"},
+    {"region": "North West Europe", "risk": "Very High (>25)", "color": "#2277A0"},
+
+    {"region": "South East Asia", "risk": "Very Low (≤5)",     "color": "#F5EEC4"},
+    {"region": "South East Asia", "risk": "Low (5–10)",        "color": "#EEE099"},
+    {"region": "South East Asia", "risk": "Medium (10–15)",    "color": "#DDCC77"},
+    {"region": "South East Asia", "risk": "High (15–25)",      "color": "#BBAA44"},
+    {"region": "South East Asia", "risk": "Very High (>25)",   "color": "#887722"},
+
+    {"region": "Southern and Central Asia", "risk": "Very Low (≤5)",   "color": "#FECDAA"},
+    {"region": "Southern and Central Asia", "risk": "Low (5–10)",      "color": "#FE9D55"},
+    {"region": "Southern and Central Asia", "risk": "Medium (10–15)",  "color": "#FE6100"},
+    {"region": "Southern and Central Asia", "risk": "High (15–25)",    "color": "#C44A00"},
+    {"region": "Southern and Central Asia", "risk": "Very High (>25)", "color": "#883200"},
+
+    {"region": "Southern and Eastern Europe", "risk": "Very Low (≤5)",   "color": "#E8CCE8"},
+    {"region": "Southern and Eastern Europe", "risk": "Low (5–10)",      "color": "#D4A4D4"},
+    {"region": "Southern and Eastern Europe", "risk": "Medium (10–15)",  "color": "#AA4499"},
+    {"region": "Southern and Eastern Europe", "risk": "High (15–25)",    "color": "#882277"},
+    {"region": "Southern and Eastern Europe", "risk": "Very High (>25)", "color": "#601155"},
+
+    {"region": "Sub Saharan Africa", "risk": "Very Low (≤5)",   "color": "#B3AEDD"},
+    {"region": "Sub Saharan Africa", "risk": "Low (5–10)",      "color": "#7A72C4"},
+    {"region": "Sub Saharan Africa", "risk": "Medium (10–15)",  "color": "#332288"},
+    {"region": "Sub Saharan Africa", "risk": "High (15–25)",    "color": "#251966"},
+    {"region": "Sub Saharan Africa", "risk": "Very High (>25)", "color": "#160F44"},
+
+    {"region": "North East Asia", "risk": "Very Low (≤5)",   "color": "#EEC8CC"},
+    {"region": "North East Asia", "risk": "Low (5–10)",      "color": "#DD9EA5"},
+    {"region": "North East Asia", "risk": "Medium (10–15)",  "color": "#CC6677"},
+    {"region": "North East Asia", "risk": "High (15–25)",    "color": "#AA3344"},
+    {"region": "North East Asia", "risk": "Very High (>25)", "color": "#771122"},
+
+    {"region": "North Africa and the Middle East", "risk": "Very Low (≤5)",   "color": "#E0E0E0"},
+    {"region": "North Africa and the Middle East", "risk": "Low (5–10)",      "color": "#B0B0B0"},
+    {"region": "North Africa and the Middle East", "risk": "Medium (10–15)",  "color": "#111111"},
+    {"region": "North Africa and the Middle East", "risk": "High (15–25)",    "color": "#080808"},
+    {"region": "North Africa and the Middle East", "risk": "Very High (>25)", "color": "#000000"}
+  ]},
+  "width": 100,
+  "height": 80,
+  "mark": "rect",
+  "encoding": {
+    "x": {
+      "field": "risk", "type": "ordinal", "title": "% of overseas-born",
+      "sort": ["NA","Very Low (≤5)","Low (5–10)","Medium (10–15)","High (15–25)","Very High (>25)"],
+      "axis": {"labelAngle": 45}
+    },
+    "y": {"field": "region", "type": "ordinal", "title": "Region"},
+    "color": {"field": "color", "type": "nominal", "scale": null}
+  }
+}

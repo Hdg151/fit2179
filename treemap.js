@@ -3,14 +3,47 @@ const height = 320;
 
 const color = d3.scaleOrdinal()
   .range([
-    "#2F4B7C",
-    "#665191",
-    "#A05195",
-    "#D45087",
-    "#F95D6A",
-    "#FF7C43",
-    "#FFA600"
+    "#88CCEE",
+    "#DDCC77",
+    "#FE6100",
+    "#AA4499",
+    "#332288",
+    "#CC6677",
+    "#111111"
   ]);
+
+let treemapTotalValue = 0;
+
+function formatTreemapTooltip(d) {
+  const value = d3.format(",")(d.value);
+  const percentage = treemapTotalValue > 0 ? d3.format(".1%")(d.value / treemapTotalValue) : "0%";
+  const path = d.ancestors()
+    .map(function(node) { return node.data.name; })
+    .reverse()
+    .slice(1)
+    .join(" / ");
+
+  const details = "Count: " + value + "<br>Share: " + percentage;
+  return path ? path + "<br>" + details : details;
+}
+
+function showTreemapTooltip(tooltip, event, d) {
+  tooltip
+    .style("opacity", 1)
+    .html(formatTreemapTooltip(d))
+    .style("left", (event.pageX + 14) + "px")
+    .style("top", (event.pageY - 14) + "px");
+}
+
+function moveTreemapTooltip(tooltip, event) {
+  tooltip
+    .style("left", (event.pageX + 14) + "px")
+    .style("top", (event.pageY - 14) + "px");
+}
+
+function hideTreemapTooltip(tooltip) {
+  tooltip.style("opacity", 0);
+}
 
 function wrapSvgText(textSelection, width, lineHeight, maxLines) {
   textSelection.each(function() {
@@ -86,10 +119,12 @@ d3.csv("data/immi_count_2024.csv").then(function(data) {
     .sum(function(d) { return d.value; })
     .sort(function(a, b) { return b.value - a.value; });
 
+  treemapTotalValue = root.value;
+
   d3.treemap()
     .size([width, height])
-    .paddingInner(4)
-    .paddingOuter(8)
+    .paddingInner(2)
+    .paddingOuter(0)
     .round(true)(root);
 
   const svg = d3.select("#arrival_countries")
@@ -97,6 +132,11 @@ d3.csv("data/immi_count_2024.csv").then(function(data) {
     .attr("width", width)
     .attr("height", height)
     .style("font", "14px sans-serif");
+
+  const tooltip = d3.select("body")
+    .append("div")
+    .attr("class", "treemap-tooltip")
+    .style("opacity", 0);
 
   // Draw group rectangles for depth-1 nodes (e.g., 'Top 20') so it appears as one block
   const groups = svg.selectAll("g.group")
@@ -110,7 +150,17 @@ d3.csv("data/immi_count_2024.csv").then(function(data) {
     .attr("width", function(d) { return d.x1 - d.x0; })
     .attr("height", function(d) { return d.y1 - d.y0; })
     .attr("fill", function(d) { return d.data.name === 'Other' ? '#bdbdbd' : '#f5f5f5'; })
-    .attr("stroke", "#ccc");
+    .attr("stroke", "#ccc")
+    .style("cursor", "default")
+    .on("mouseenter", function(event, d) {
+      showTreemapTooltip(tooltip, event, d);
+    })
+    .on("mousemove", function(event) {
+      moveTreemapTooltip(tooltip, event);
+    })
+    .on("mouseleave", function() {
+      hideTreemapTooltip(tooltip);
+    });
 
   groups.append("text")
     .attr("x", 6)
@@ -119,7 +169,7 @@ d3.csv("data/immi_count_2024.csv").then(function(data) {
     .style("font-weight", "700")
     .text(function(d) { return d.data.name; });
 
-  // Now draw leaves (depth >= 2 and also 'Other' which is depth 1 but a leaf)
+  // draw leaves (depth >= 2 and also 'Other' which is depth 1 but a leaf)
   const leaves = svg.selectAll("g.leaf")
     .data(root.leaves())
     .enter()
@@ -131,7 +181,17 @@ d3.csv("data/immi_count_2024.csv").then(function(data) {
     .attr("width", function(d) { return d.x1 - d.x0; })
     .attr("height", function(d) { return d.y1 - d.y0; })
     .attr("fill", function(d, i) { return d.data.name === 'Other' ? '#bdbdbd' : color(i); })
-    .attr("stroke", "#fff");
+    .attr("stroke", "#fff")
+    .style("cursor", "default")
+    .on("mouseenter", function(event, d) {
+      showTreemapTooltip(tooltip, event, d);
+    })
+    .on("mousemove", function(event) {
+      moveTreemapTooltip(tooltip, event);
+    })
+    .on("mouseleave", function() {
+      hideTreemapTooltip(tooltip);
+    });
 
   leaves.append("clipPath")
     .attr("id", function(d, i) { return "leaf-clip-" + i; })
@@ -153,18 +213,4 @@ d3.csv("data/immi_count_2024.csv").then(function(data) {
     .text(function(d) { return d.data.name; });
 
   wrapSvgText(leaves.selectAll("text").filter(function(_, i) { return i === 0; }), 110, 1.1, 3);
-
-  leaves.append("text")
-    .attr("x", 8)
-    .attr("y", 38)
-    .attr("fill", "white")
-    .style("font-size", function(d) {
-      const boxWidth = d.x1 - d.x0;
-      const boxHeight = d.y1 - d.y0;
-      return Math.max(8, Math.min(11, Math.min(boxWidth / 14, boxHeight / 10))) + "px";
-    })
-    .attr("clip-path", function(d, i) { return "url(#leaf-clip-" + i + ")"; })
-    .text(function(d) { return d.data.value; });
-
-  wrapSvgText(leaves.selectAll("text").filter(function(_, i) { return i === 1; }), 110, 1.05, 2);
 });

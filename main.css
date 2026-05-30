@@ -61,6 +61,7 @@ h1 {
   padding: 68px 0 18px;
   font-size: clamp(2.65rem, 7vw, 5.85rem);
   font-weight: 850;
+  font-family: Georgia, "Times New Roman", Times, serif;
   text-wrap: balance;
 }
 
@@ -146,12 +147,27 @@ p {
   width: 100%;
   min-height: 260px;
   margin: 28px auto 0;
-  padding: 20px;
+  padding: 23px;
   overflow-x: auto;
   background: var(--surface-strong);
   border: 1px solid rgba(31, 41, 51, 0.1);
   border-radius: 8px;
   box-shadow: var(--shadow);
+}
+
+.treemap-tooltip {
+  position: absolute;
+  z-index: 20;
+  max-width: 240px;
+  padding: 10px 12px;
+  color: #f8fafc;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  background: rgba(15, 23, 42, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.24);
+  pointer-events: none;
 }
 
 .pure-g {

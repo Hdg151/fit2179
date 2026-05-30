@@ -5,7 +5,7 @@
   "data": {
     "url": "data/chart_education.csv"
   },
-  "title":{"text":"Education Qualification level by visa type"},
+  "title":{"text":"Percentage of higher education achievement by visa type"},
   "transform": [
     {
       "calculate": "indexof(['Postgraduate degree', 'Bachelor degree', 'Graduate diploma and graduate certificate', 'Advanced diploma and diploma', 'Certificate III & IV'], datum.degree) >= 0 ? datum.degree : 'Lower education'",

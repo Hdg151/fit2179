@@ -4,7 +4,7 @@
   "data": {
     "url": "data/line_stacked_bars.csv"
   },
-  "width": 600,
+  "width": 800,
   "title": { "text": "Australian immigrants - Arrival and Departure" },
     "config": {
       "range": {
@@ -23,7 +23,8 @@
     {
       "calculate": "datum.name == 'Departure' ? -datum.value : datum.value",
       "as": "value"
-    }
+    },
+    {"calculate": "'Net'", "as": "Net Legend"}
   ],
   "encoding": {
     "x": { "field": "Year", "type": "ordinal", "title": "Year" }
@@ -47,19 +48,17 @@
       }
     },
     {
-      "mark": { "type": "line" , "color": "#FFA600", "strokeWidth": 3},
-      "transform": [
-        { "calculate": "'Net immigrant change'", "as": "legendLabel" }
-      ],
+      "mark": { "type": "line", "strokeWidth": 3},
       "encoding": {
         "y": { "field": "Net", "aggregate": "min" },
-        "color": {
-          "field": "legendLabel",
-          "type": "nominal"
-        }
-        ,"tooltip": [
+        "stroke": {
+          "field": "Net Legend",
+          "scale": {"range": ["#FFA600"]},
+          "legend": {"title": ""}
+        },
+        "tooltip": [
           {"field":"Year","type":"ordinal"},
-          {"field":"Net","type":"quantitative","title":"Net"}
+          {"field":"Net","type":"quantitative","title":"Net change"}
         ]
       }
     },
