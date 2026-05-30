@@ -3,7 +3,10 @@
   "background": "transparent",
   "height": 300,
   "width": 600,
-  "title":{"text":"Top 10 region of immigrant count to Australian states"},
+  "title":{
+    "text":"Top 10 region of immigrant count to Australian states",
+    "subtitle": "Click on each block to filter individual"
+  },
   "data": [
     {
       "name": "rawData",

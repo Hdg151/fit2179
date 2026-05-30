@@ -201,7 +201,7 @@
       {"field": "Region_max", "type": "nominal", "title": "Region max"},
       {"field": "Total_born_overseas", "type": "quantitative", "title": "Total born overseas (%)", "format": ".1f"},
       {"field": "North_West_Europe", "type": "quantitative", "title": "North West Europe (%)", "format": ".1f"},
-      {"field": "Southern_and_Eastern.Europe", "type": "quantitative", "title": "Southern & Eastern Europe (%)", "format": ".1f"},
+      {"field": "Southern_and_Eastern_Europe", "type": "quantitative", "title": "Southern & Eastern Europe (%)", "format": ".1f"},
       {"field": "North_Africa_and_the_Middle_East", "type": "quantitative", "title": "North Africa & Middle East (%)", "format": ".1f"},
       {"field": "South_East_Asia", "type": "quantitative", "title": "South East Asia (%)", "format": ".1f"},
       {"field": "North_East_Asia", "type": "quantitative", "title": "North East Asia (%)", "format": ".1f"},
