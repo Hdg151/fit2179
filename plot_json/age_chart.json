@@ -6,7 +6,7 @@
     },
     "width": 600,
     "height": 325,
-    "title": { "text": "Age of immigrant arriving to Australia" },
+    "title": { "text": "Age of immigrant arriving to Australia" , "fontSize":25},
 
     "transform": [
         { "calculate": "toNumber(datum.Age)", "as": "Age" }

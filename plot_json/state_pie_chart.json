@@ -40,7 +40,7 @@
         ]
     }
   },
-  "title":{"text":"States' share of total Australian immigrants"},
+  "title":{"text":"States' share of total Australian immigrants", "fontSize":20},
   "mark": {"type": "arc"},
   "encoding": {
     "theta": {"field": "number", "type": "quantitative", "stack": "normalize"},

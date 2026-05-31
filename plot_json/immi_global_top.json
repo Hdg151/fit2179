@@ -3,8 +3,8 @@
   "background": "transparent",
   "data": { "url": "data/immi_global_top.csv" },
   "width": 400,
-  "height":273,
-  "title": { "text": "Countries with top immigrant count" },
+  "height":300,
+  "title": { "text": "Countries with top immigrant count", "fontSize":20 },
   "config": {
     "range": {
         "category": [

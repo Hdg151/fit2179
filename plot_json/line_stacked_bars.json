@@ -5,7 +5,7 @@
     "url": "data/line_stacked_bars.csv"
   },
   "width": 800,
-  "title": { "text": "Australian immigrants - Arrival and Departure" },
+  "title": { "text": "Australian immigrants - Arrival and Departure" , "fontSize":20},
     "config": {
       "range": {
           "category": [
@@ -27,7 +27,7 @@
     {"calculate": "'Net'", "as": "Net Legend"}
   ],
   "encoding": {
-    "x": { "field": "Year", "type": "ordinal", "title": "Year" }
+    "x": { "field": "Year", "type": "ordinal", "title": "Year","axis": {"labelAngle": 0}}
   },
   "layer": [
     {

@@ -5,7 +5,7 @@
   "width": 400,
   "height": 240,
   "padding": 5,
-
+  "title":{"text":"Year to get permanent visa by first visa type", "fontSize":20},
   "data": {
         "name": "table",
       "url": "data/time_to_permanent.csv",

@@ -127,7 +127,7 @@ d3.csv("data/immi_count_2024.csv").then(function(data) {
     .paddingOuter(0)
     .round(true)(root);
 
-  const svg = d3.select("#arrival_countries")
+  const svg = d3.select("#treemap")
     .append("svg")
     .attr("width", width)
     .attr("height", height)

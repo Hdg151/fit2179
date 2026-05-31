@@ -4,7 +4,7 @@
   "height": 300,
   "width": 600,
   "title":{
-    "text":"Top 10 region of immigrant count to Australian states",
+    "text":"Top 10 region of immigrant count to Australian states", "fontSize":25,
     "subtitle": "Click on each block to filter individual"
   },
   "data": [
@@ -229,16 +229,7 @@
     }
   ],
   "axes": [
-    {
-      "orient": "bottom",
-      "scale": "x",
-      "encode": {
-        "labels": {
-          "update": {"text": {"scale": "stackNames", "field": "value"}}
-        }
-      }
-    },
-    {"orient": "left", "scale": "y"}
+
   ],
   "marks": [
     {
