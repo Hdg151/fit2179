@@ -1,117 +1,58 @@
 {
-  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "background": "transparent",
   "description": "A basic grouped bar chart example.",
-  "width": 400,
-  "height": 240,
+  "width": 500,
+  "height": 310,
   "padding": 5,
-  "title":{"text":"Year to get permanent visa by first visa type", "fontSize":20},
+  "title":{"text":"Year to get permanent visa by first visa type", "fontSize":25},
   "data": {
-        "name": "table",
-      "url": "data/time_to_permanent.csv",
-      "format": {"type": "csv"}
+      "url": "data/time_to_permanent.csv"
     },
-
-  "scales": [
-    {
-      "name": "xscale",
-      "type": "band",
-      "domain": {"data": "table", "field": "Time_to_permanent"},
-      "range": "width",
-      "padding": 0.2
+  "encoding": {
+    "x": {
+      "field": "Time_to_permanent",
+      "type":"ordinal",
+      "scale": {"domain": ["<1", "1-2", "2-3", "3-4", "4-5", "5-6", "6-7","7-8","8-9","9-10","10+"]},
+      "axis":{"labelFontSize":15,"labelAngle":45, "titleFontSize":16},
+      "title":"Time to visa permanentship"
     },
+    "color": {"field": "visa",
+              "legend": {"labelFontSize": 14, "titleFontSize": 17}}
+  },
+  "layer":[
     {
-      "name": "yscale",
-      "type": "linear",
-      "domain": {"data": "table", "field": "percent"},
-      "range": "height",
-      "round": true,
-      "zero": true,
-      "nice": true
-    },
-    {
-      "name": "color",
-      "type": "ordinal",
-      "domain": {"data": "table", "field": "visa"},
-      "range": {"scheme": "category20"}
-    }
-  ],
-
-  "axes": [
-    {
-      "orient": "bottom",
-      "scale": "xscale",
-      "tickSize": 0,
-      "labelPadding": 4,
-      "zindex": 1,
-      "labelAngle": 45,
-      "labelAlign": "left",
-      "title": "years to permanentship"
+      "transform": [{"filter":"datum.visa == 'Skilled'"}],
+      "mark":{"type":"bar","xOffset":-12,"size": 8 },
+      "encoding":{
+        "y": {"field":"percent","type":"quantitative",
+              "axis":{"labelFontSize":15, "titleFontSize":16},
+              "title":"%"
+        }
+      }
     },
     {
-      "orient": "left",
-      "scale": "yscale",
-      "title": "%"
-    }
-  ],
-
-  "legends": [
+      "transform": [{"filter":"datum.visa == 'Family'"}],
+      "mark":{"type":"bar","xOffset":-4,"size": 8},
+      "encoding":{
+        "y": {"field":"percent","type":"quantitative"}
+      }
+    },
     {
-      "fill": "color",
-      "title": "Visa Type",
-      "orient": "top-right",
-      "offset": 8
-    }
-  ],
-
-  "marks": [
+      "transform": [{"filter":"datum.visa == 'Humanitarian'"}],
+      "mark":{"type":"bar","xOffset":4,"size": 8},
+      "encoding":{
+        "y": {"field":"percent","type":"quantitative"}
+      }
+    },
     {
-      "type": "group",
-
-      "from": {
-        "facet": {
-          "data": "table",
-          "name": "facet",
-          "groupby": "Time_to_permanent"
-        }
-      },
-
-      "encode": {
-        "enter": {
-          "x": {"scale": "xscale", "field": "Time_to_permanent"}
-        }
-      },
-
-      "signals": [
-        {"name": "width", "update": "bandwidth('xscale')"}
-      ],
-
-      "scales": [
-        {
-          "name": "pos",
-          "type": "band",
-          "range": "width",
-          "domain": {"data": "facet", "field": "visa"}
-        }
-      ],
-
-      "marks": [
-        {
-          "name": "bars",
-          "from": {"data": "facet"},
-          "type": "rect",
-          "encode": {
-            "enter": {
-              "x": {"scale": "pos", "field": "visa"},
-              "width": {"scale": "pos", "band": 1},
-                "y": {"scale": "yscale", "field": "percent"},
-                "y2": {"scale": "yscale", "value": 0},
-                "fill": {"scale": "color", "field": "visa"},
-                "tooltip": {"signal": "datum.visa + ': ' + format(datum.percent, '.1f') + '%'"}
-            }
-          }
-        }
-      ]
+      "transform": [{"filter":"datum.visa == 'Other permanent'"}],
+      "mark":{"type":"bar","xOffset":12,"size": 8},
+      "encoding":{
+        "y": {"field":"percent","type":"quantitative"}
+      }
     }
   ]
 }
+
+  

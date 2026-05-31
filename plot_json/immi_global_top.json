@@ -33,7 +33,7 @@
         "y": {
           "field": "Country",
           "type": "nominal",
-          "title": "Total Population",
+          "title": "Country",
           "axis": {
             "labelColor": {
               "condition": {
@@ -67,8 +67,8 @@
         },
         "tooltip": [
           {"field":"Country","type":"nominal"},
-          {"field":"million_2024","type":"quantitative","title":"Millions 2024"},
-          {"field":"percent_2024","type":"quantitative","title":"Percent 2024","format":".1%"}
+          {"field":"million_2024","type":"quantitative","title":"Total Immigrant (millions)"},
+          {"field":"percent_2024","type":"quantitative","title":"% of immigrant in population"}
         ],
         "color": {
           "field": "highlight",

@@ -78,13 +78,13 @@
         "align": "left",
         "baseline": "middle",
         "dx": 8,
-        "dy": 20,
+        "dy": 0,
         "fontSize": 16,
         "fontWeight": "bold"
       },
       "encoding": {
         "x": { "datum": "2020" },
-        "y": { "datum": 20 },
+        "y": { "datum": -290000 },
         "text": { "value": "covid-lockdown" }
       }
     }

@@ -5,7 +5,7 @@
         "url": "data/age_chart.csv"
     },
     "width": 600,
-    "height": 325,
+    "height": 300,
     "title": { "text": "Age of immigrant arriving to Australia" , "fontSize":25},
 
     "transform": [
@@ -14,7 +14,8 @@
 
     "encoding": {
         "x": { "field": "Age", "type": "quantitative", "title":"Age",
-               "scale": {"domain": [0, 96]}    
+               "scale": {"domain": [0, 96]},
+               "axis":{"labelFontSize":15,"titleFontSize":16}
             }    
     },
     "layer": [
@@ -22,7 +23,8 @@
             "mark":{"type":"line","strokeWidth":3},
             "encoding":{
                 "y": {
-                        "field": "a2024", "type": "quantitative", "title": "People"
+                        "field": "a2024", "type": "quantitative", "title": "People",
+                        "axis":{"labelFontSize":15,"titleFontSize":16}
                      }
                 ,"tooltip": [
                     {"field":"Age","type":"quantitative"},
@@ -37,7 +39,7 @@
                 "baseline": "middle",
                 "dx": -20,
                 "dy": -10,
-                "fontSize": 12
+                "fontSize": 18
             },
             "encoding": {
                 "x": { "datum": "18" },
@@ -52,7 +54,7 @@
                 "baseline": "middle",
                 "dx": 20,
                 "dy": -10,
-                "fontSize": 12
+                "fontSize": 18
             },
             "encoding": {
                 "x": { "datum": "25" },

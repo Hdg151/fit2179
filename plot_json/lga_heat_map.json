@@ -2,9 +2,9 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "background": "transparent",
   "title": {
-    "text": "Bivariate choropleth: Region max × overseas-born share by LGA", "fontSize":20,
+    "text": "% of overseas population and dominanting region of birth by LGA", "fontSize":20,
     "anchor": "middle",
-    "subtitle": "Each Region_max keeps one hue family; only brightness changes across the overseas-born bins"
+    "subtitle": "Each Region has one hue family; only brightness changes across the overseas % bins"
   },
   "width": 550,
   "height": 550,
@@ -36,9 +36,7 @@
           [149.1300, -35.2809],
           [147.3272, -42.8821],
           [130.8456, -12.4634],
-          [153.3980, -28.0167],
-          [151.7829, -32.9283],
-          [150.8931, -34.4278]
+          [153.3980, -28.0167]
         ],
         "labels": [
           "Whole of Australia",
@@ -50,9 +48,7 @@
           "Canberra",
           "Hobart",
           "Darwin",
-          "Gold Coast",
-          "Newcastle",
-          "Wollongong"
+          "Gold Coast"
         ],
         "name": "Map Centre: "
       }

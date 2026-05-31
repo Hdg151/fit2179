@@ -1,206 +1,117 @@
 {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "background": "transparent",
-    "data": {
-        "url": "data/aus_born_vs_overseas.csv"
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "background": "transparent",
+  "description": "A basic grouped bar chart example.",
+  "width": 400,
+  "height": 240,
+  "padding": 5,
+  "title":{"text":"Year to get permanent visa by first visa type", "fontSize":20},
+  "data": {
+        "name": "table",
+      "url": "data/time_to_permanent.csv",
+      "format": {"type": "csv"}
     },
-    "vconcat":[
-        {
-            "width": 800,
-            "height":250,
-            "title": { "text": "Proportion in Australian Population" },
-            "config": {
-            "range": {
-                "category": [
-                    "#2F4B7C",
-                    "#665191",
-                    "#A05195",
-                    "#D45087",
-                    "#F95D6A",
-                    "#FF7C43",
-                    "#FFA600"
-                    ]
-                }
-            },
-            "transform": [
-                {"calculate": "datum.name == \"aus_born\" ? 'Australian born' : 'Overseas born'", "as": "name"},
-                {"calculate": "'overseas_percent'", "as": "Overseas percent Legend"}
-            ],
 
-            "encoding": {
-                "x": {
-                    "field": "Year",
-                    "type": "ordinal",
-                    "title": "Year",
-                    "axis": {
-                        "orient": "bottom",
-                        "values": ["1891", "1910", "1930", "1950", "1970", "1990", "2010", "2025"]
-                    }
-                }
-            },
-            "layer": [
-                {
-                    "mark":"area",
-                    "encoding":{
-                        "y": {
-                                "field": "value", "type": "quantitative", "title": "People (millions)",
-                                "scale": {"domain": [0, 35]}
-                            },
-                        "color": {"field":"name", "type": "nominal", "title":"Origin","scale": {"range": ["#F95D6A", "#FFA600"]}}
-                                        ,"tooltip": [
-                                            {"field":"Year","type":"ordinal"},
-                                            {"field":"value","type":"quantitative","title":"People (millions)"},
-                                            {"field":"name", "type":"nominal","title":"Origin"}
-                                        ]
-                    }
-                },
-                {
-                    "mark": { "type": "line","strokeWidth": 4},
-                    "transform": [
-                        { "calculate": "'Overseas-born percent'", "as": "legendLabel" }
-                    ],
-                    "encoding":{
-                        "y": {"field": "overseas_percent", "aggregate": "min", "type":"quantitative","title":"%","scale": {"domain": [0, 35]}},
-                        "color": {"field": "legendLabel","type": "nominal"},
-                        
-                        "stroke": {
-                            "field": "Overseas percent Legend",
-                            "scale": {"range": ["#665191"]},
-                            "legend": {"title": ""}
-                        },
-                        "tooltip": [
-                            {"field":"Year","type":"ordinal"},
-                            {"field":"overseas_percent","type":"quantitative","title":"Overseas %"}
-                        ]
-                    }
-                },
-                {
-                    "mark": {
-                        "type": "rule",
-                        "color": "black",
-                        "strokeWidth": 2
-                    },
-                    "encoding": {
-                        "x": {"datum": "1945"}
-                    }
-                    },
-                    {
-                    "mark": {
-                        "type": "text",
-                        "align": "left",
-                        "baseline": "middle",
-                        "dx": 6,
-                        "dy": -30,
-                        "fontSize": 12,
-                        "fontWeight": "bold"
-                    },
-                    "encoding": {
-                        "x": {"datum": "1946"},
-                        "text": {"value": "end of WWII"}
-                    }
-                }
-            ],
-            "resolve": {"scale": {"y": "independent"}}
-        },
-        {
-            "width": 800,
-            "height":60,
+  "scales": [
+    {
+      "name": "xscale",
+      "type": "band",
+      "domain": {"data": "table", "field": "Time_to_permanent"},
+      "range": "width",
+      "padding": 0.2
+    },
+    {
+      "name": "yscale",
+      "type": "linear",
+      "domain": {"data": "table", "field": "percent"},
+      "range": "height",
+      "round": true,
+      "zero": true,
+      "nice": true
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": {"data": "table", "field": "visa"},
+      "range": {"scheme": "category20"}
+    }
+  ],
 
-            
-            
-            "config": {
-            "range": {
-                "category": [
-                    "#2F4B7C",
-                    "#665191",
-                    "#A05195",
-                    "#D45087",
-                    "#F95D6A",
-                    "#FF7C43",
-                    "#FFA600"
-                    ]
-                }
-            },
-            
-            "transform": [
-                {"calculate": "datum.name == \"aus_born\" ? 'Australian born' : 'Overseas born'", "as": "name"},
-                {"calculate": "'overseas_percent'", "as": "Overseas percent Legend"}
-            ],
+  "axes": [
+    {
+      "orient": "bottom",
+      "scale": "xscale",
+      "tickSize": 0,
+      "labelPadding": 4,
+      "zindex": 1,
+      "labelAngle": 45,
+      "labelAlign": "left",
+      "title": "years to permanentship"
+    },
+    {
+      "orient": "left",
+      "scale": "yscale",
+      "title": "%"
+    }
+  ],
 
-            "encoding": {
-                "x": {
-                    "field": "Year",
-                    "type": "temporal",
-                    "title": "Year",
-                    "axis": {
-                        "orient": "bottom",
-                        "values": ["1891", "1910", "1930", "1950", "1970", "1990", "2010", "2025"]
-                    }
-                }
-            },
-            "layer": [
-                {
-                    "mark":"area",
-                    "encoding":{
-                        "y": {
-                                "field": "value", "type": "quantitative", "title": "",
-                                "scale": {"domain": [0, 35]}
-                            },
-                        "color": {"field":"name", "type": "nominal", "title":"Origin","scale": {"range": ["#F95D6A", "#FFA600"]}}
-                                        ,"tooltip": [
-                                            {"field":"Year","type":"ordinal"},
-                                            {"field":"value","type":"quantitative","title":"People (millions)"},
-                                            {"field":"name", "type":"nominal","title":"Origin"}
-                                        ]
-                    }
-                },
-                {
-                    "mark": { "type": "line","strokeWidth": 4},
-                    "transform": [
-                        { "calculate": "'Overseas-born percent'", "as": "legendLabel" }
-                    ],
-                    "encoding":{
-                        "y": {"field": "overseas_percent", "aggregate": "min", "type":"quantitative","title":"","scale": {"domain": [0, 35]}},
-                        "color": {"field": "legendLabel","type": "nominal"},
-                        
-                        "stroke": {
-                            "field": "Overseas percent Legend",
-                            "scale": {"range": ["#665191"]},
-                            "legend": {"title": ""}
-                        },
-                        "tooltip": [
-                            {"field":"Year","type":"ordinal"},
-                            {"field":"overseas_percent","type":"quantitative","title":"Overseas %"}
-                        ]
-                    }
-                },
-                {
-                    "mark": {
-                        "type": "rule",
-                        "color": "black",
-                        "strokeWidth": 2
-                    },
-                    "encoding": {
-                        "x": {"datum": "1945"}
-                    }
-                    },
-                    {
-                    "mark": {
-                        "type": "text",
-                        "align": "left",
-                        "baseline": "middle",
-                        "dx": 6,
-                        "dy": -30,
-                        "fontSize": 12,
-                        "fontWeight": "bold"
-                    },
-                    "encoding": {
-                        "x": {"datum": "1946"},
-                        "text": {"value": "end of WWII"}
-                    }
-                }
-            ],
-            "resolve": {"scale": {"y": "independent"}}
+  "legends": [
+    {
+      "fill": "color",
+      "title": "Visa Type",
+      "orient": "top-right",
+      "offset": 8
+    }
+  ],
+
+  "marks": [
+    {
+      "type": "group",
+
+      "from": {
+        "facet": {
+          "data": "table",
+          "name": "facet",
+          "groupby": "Time_to_permanent"
         }
-    ]
+      },
+
+      "encode": {
+        "enter": {
+          "x": {"scale": "xscale", "field": "Time_to_permanent"}
+        }
+      },
+
+      "signals": [
+        {"name": "width", "update": "bandwidth('xscale')"}
+      ],
+
+      "scales": [
+        {
+          "name": "pos",
+          "type": "band",
+          "range": "width",
+          "domain": {"data": "facet", "field": "visa"}
+        }
+      ],
+
+      "marks": [
+        {
+          "name": "bars",
+          "from": {"data": "facet"},
+          "type": "rect",
+          "encode": {
+            "enter": {
+              "x": {"scale": "pos", "field": "visa"},
+              "width": {"scale": "pos", "band": 1},
+                "y": {"scale": "yscale", "field": "percent"},
+                "y2": {"scale": "yscale", "value": 0},
+                "fill": {"scale": "color", "field": "visa"},
+                "tooltip": {"signal": "datum.visa + ': ' + format(datum.percent, '.1f') + '%'"}
+            }
+          }
+        }
+      ]
+    }
+  ]
 }

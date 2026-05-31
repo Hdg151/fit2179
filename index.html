@@ -38,16 +38,17 @@
     <div id="aus_born_vs_overseas"></div>
         <p>
                 The earliest population records that include country of birth show that 32% of Australia's population was
-                        <span class="overseas-born">Overseas-born</span> in 1891, reflecting high migration in the late 19th century. This share fell to 10% by 1947 after World War I, the Great Depression
-                                and World War II slowed migration. It then rose rapidly during the post-war migration period before increasing more steadily
-                                        from the 1970s onward, changing the balance between <span class="australia-born">Australia-born</span> and <span class="overseas-born">Overseas-born</span> residents.
+                <span class="overseas-born">Overseas-born</span> in 1891, reflecting high migration in the late 19th century. 
+                This share fell to 10% by 1947 as World War II slowed migration, leaving <span class="australia-born">Australian-born</span> as sole driver of population growth.
+                <span class="overseas-born">Overseas-born</span> then rose rapidly during the post-war migration period before increasing more steadily
+                from the 1970s onward.
     </p>
 
     <div id="line_stacked_bars"></div>
     <p>
-        Australia usually receives more migrants than it loses, so net overseas migration is an important contributor to population growth.
-        The overseas-born share declined in 2021 as COVID-19 travel restrictions disrupted movement into and out of the country.
-        After restrictions were removed in 2022, overseas-born increased again, mostly caused by previous immigrants returning to Australia.
+        The ratio of <span class="arrival">arriving</span> to <span class="departure">leaving</span> immigrant of Australia ranged from 2:1 to 4:1, so <span class="Net">net overseas migration</span> is a significant contributor to population growth.
+        The <span class="arrival">incoming immigrant</span> share declined in 2021 due to COVID-19 pandemic disrupting global travel.
+        After Australia removed travel restriction in 2022, <span class="arrival">immigration into</span> Australia increased again, which could be caused by previous immigrants returning to Australia.
     </p>
 
     <h2>Modern-day statistics - Australian immigration seen from a global perspective</h2>
@@ -57,8 +58,8 @@
             <div id="immi_global_top"></div>
             <p class="chart-note">
                 By total immigrant population, Australia sits among the world's leading destination countries, at a similar scale to countries
-                such as France and Italy. When adjusted for population size, Australia ranks even higher, closer to countries such as Canada
-                and Spain.
+                such as Canada, France and Spain. When adjusted for population size, Australia outranks most European countries, now only trail behind 
+                major immigrant destination in the Middle East such as Jordan, Saudi Arabia, and the UAE.
             </p>
         </div>
         <div class="pure-u-1-2">
@@ -67,8 +68,9 @@
                 <div id="treemap"></div>
             </div>
             <p class="chart-note">
-                India, the United Kingdom and China account for more than one-third of Australia's overseas-born population, followed by
-                the Philippines and New Zealand.
+                The top 3, the United Kingdom, India and China, account for more than one-fourth of Australia's overseas-born population.
+                Other countries with high number of immigrant in Australia includes New Zealand, Vietnam and Phillipines. The top 20 countries
+                makes up almost 70% of total Australian immigration.
             </p>
         </div>
     </div>
@@ -107,8 +109,9 @@
         <div class="pure-u-1-2">
             <p class="state-note">
                 Most overseas-born residents settle in Australia's five largest states, reflecting the pull of major labour markets,
-                education hubs and established migrant communities. The state distribution shows that immigration is not spread evenly:
-                it is closely connected to where jobs, universities, housing networks and long-standing migrant communities are concentrated.
+                education hubs and established migrant communities. The state distribution shows that immigration is not spread evenly: 
+                The two largest states get over 60% of incoming immigrant, and New South Wales alone had more immigrant than Queensland,
+                Western Australia and South Australia combined.
             </p>
         </div>
     </div>
@@ -118,7 +121,7 @@
             <p class="flow-note">
                 Migrants from Asia, the Middle East, Eastern Europe and Africa are more likely to settle in New South Wales or Victoria,
                 the states containing Australia's two largest cities. Migrants from New Zealand, the United Kingdom and Western Europe
-                are more evenly spread across Queensland, South Australia and Western Australia.
+                are more evenly spread across Queensland, South Australia and Western Australia. 
             </p>
         </div>
         <div class="pure-u-1-2">
@@ -133,8 +136,16 @@
         <div class="pure-u-1-2">
             <p class="blend">A</p>
             
-            <div id="lga_heat_map_legend"></div> <!-- source: Bang Wong color blind pallete-->
-            <div id="region_map"></div> 
+            <div class="pure-g map-pair-no-pad">
+                <div class="pure-u-1-2">
+                    <div id="lga_heat_map_legend"></div> <!-- source: Bang Wong color blind pallete-->
+                </div>
+                <div class="pure-u-1-2">
+                    <div id="region_map"></div> 
+                </div>
+            </div>
+            
+            
             <div class="map-copy">
                 <h3>Local settlement patterns</h3>
                 <p>
@@ -150,8 +161,14 @@
     </div>
     <footer class="site-footer">
         <p class="muted">About</p>
-        <p class="muted">Author: Hung Dang · Student ID: 36463825</p>
-        <p class="muted">Data sources: ABS 2024 and ABS LGA-level 2021 census</p>
+        <p class="muted">Author: Hung Dang · Student ID: 36463825 · Last updated: 31/05/2026</p>
+        <p class="muted"><strong>Data sources:</strong> All data from Australian Bureau of Statistics (ABS):</p>
+        <ul class="muted">
+            <li><a href="https://www.abs.gov.au/statistics/people/people-and-communities/permanent-migrants-australia">Permanent migrants in Australia, 2021</a></li>
+            <li><a href="https://www.abs.gov.au/statistics/people/population/australias-population-country-birth/latest-release">Australia's population by country of birth, 2024</a></li>
+            <li><a href="https://www.abs.gov.au/statistics/people/population/overseas-migration/latest-release">Overseas Migration, 2024</a></li>
+            <li><a href="https://www.abs.gov.au/methodologies/data-region-methodology/2011-25">Data by region methodology, 2021</a></li>
+        </ul>
     </footer>
 </body>
 
