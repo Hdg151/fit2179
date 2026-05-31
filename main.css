@@ -13,6 +13,22 @@
   font-weight: 700;
 }
 
+/* Match the line stacked bar chart palette in the descriptive copy */
+.line-stacked-copy .arrival {
+  color: #2F4B7C;
+  font-weight: 700;
+}
+
+.line-stacked-copy .departure {
+  color: #639fab;
+  font-weight: 700;
+}
+
+.line-stacked-copy .Net {
+  color: #FFA600;
+  font-weight: 700;
+}
+
 /* Other styles continue here */
 :root {
   --page: #f6f1e8;
